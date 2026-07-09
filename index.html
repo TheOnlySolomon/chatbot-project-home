@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOLOMON AI | Advanced Interface</title>
+  <style>
+    :root {
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.4);
+      --accent: #f472b6;
+      --bg-dark: #020617;
+      --glass: rgba(15, 23, 42, 0.85);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      color: #e2e8f0;
+    }
+
+    /* --- Background Layers --- */
+    .bg-container {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    }
+
+    /* Wave Effect */
+    .waves {
+      position: absolute;
+      width: 100%;
+      height: 15vh;
+      bottom: 0;
+      opacity: 0.3;
+    }
+    .parallax > use {
+      animation: move-forever 20s cubic-bezier(.55,.5,.45,.5) infinite;
+      fill: var(--primary);
+    }
+    @keyframes move-forever {
+      0% { transform: translate3d(-90px,0,0); }
+      100% { transform: translate3d(85px,0,0); }
+    }
+
+    /* Pixel Clouds & Drones */
+    .cloud {
+      position: absolute;
+      background: #a855f7;
+      height: 30px;
+      width: 80px;
+      box-shadow: 20px 20px 0 var(--accent), -20px 10px 0 var(--primary);
+      opacity: 0.2;
+      animation: drift var(--d) linear infinite;
+    }
+    .drone {
+      position: absolute;
+      width: 10px;
+      height: 6px;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      animation: patrol 5s ease-in-out infinite alternate;
+    }
+    @keyframes drift { from { left: -150px; } to { left: 100vw; } }
+    @keyframes patrol { to { transform: translate(40px, -30px); } }
+
+    /* --- UI Ornaments --- */
+    .scanline {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+      height: 2px;
+      opacity: 0.05;
+      animation: scan 8s linear infinite;
+      z-index: 2;
+    }
+    .corner {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      opacity: 0.4;
+      z-index: 2;
+    }
+    .tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+    .br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+    @keyframes scan { from { top: -5%; } to { top: 105%; } }
+
+    /* --- Chat Container --- */
+    .box {
+      width: 550px;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--glass); 
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+      z-index: 5;
+    }
+
+    .header {
+      padding: 18px;
+      background: rgba(30, 41, 59, 0.6);
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: 4px;
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chat {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.02) 1px, rgba(255,255,255,0.02) 2px);
+    }
+
+    .msg {
+      padding: 12px 18px;
+      max-width: 85%;
+      font-size: 13px;
+      line-height: 1.6;
+      animation: slideIn 0.3s ease forwards;
+    }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+    .user { background: rgba(37, 99, 235, 0.2); align-self: flex-end; border-right: 3px solid var(--primary); }
+    .bot { background: rgba(255, 255, 255, 0.05); align-self: flex-start; border-left: 3px solid var(--accent); }
+
+    .thinking { display: flex; gap: 8px; padding: 14px; }
+    .dot { width: 4px; height: 4px; background: var(--primary); border-radius: 50%; animation: pulse 1s infinite alternate; }
+    @keyframes pulse { from { opacity: 0.2; } to { opacity: 1; transform: scale(1.5); } }
+
+    /* --- Input Area --- */
+    .input-area {
+      display: flex;
+      padding: 20px;
+      background: rgba(2, 6, 23, 0.8);
+      gap: 12px;
+      border-top: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: transparent;
+      color: var(--primary);
+      font-family: inherit;
+      outline: none;
+    }
+
+    button {
+      padding: 0 20px;
+      border: 1px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover { background: var(--primary); color: var(--bg-dark); box-shadow: 0 0 15px var(--primary-glow); }
+  </style>
+</head>
+<body>
+
+  <div class="bg-container">
+    <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none">
+      <defs><path id="w" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 v44h-352z" /></defs>
+      <g class="parallax">
+        <use href="#w" x="48" y="0" opacity="0.1" /><use href="#w" x="48" y="7" opacity="0.2" />
+      </g>
+    </svg>
+    <div class="cloud" style="top:15%; --d:35s;"></div>
+    <div class="drone" style="top:30%; left:15%;"></div>
+  </div>
+
+  <div class="scanline"></div>
+  <div class="corner tl"></div><div class="corner br"></div>
+
+  <div class="box">
+    <div class="header">SOLOMON_v4.0 <span>ONLINE</span></div>
+    <div id="chat"></div>
+    <div class="input-area">
+      <input id="input" placeholder=">> ENTER COMMAND..." autocomplete="off" />
+      <button id="sendBtn" onclick="send()">EXECUTE</button>
+    </div>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("input");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const API = "/api/generate";
+    const MODEL = "mistral:latest";
+
+    function addMsg(text, type) {
+      const div = document.createElement("div");
+      div.className = "msg " + type;
+      if (type === 'user') {
+        div.innerHTML = `<strong>[YOU]</strong><br>${text}`;
+      }
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div;
+    }
+
+    async function typeWriter(text, element) {
+      element.innerHTML = `<strong>[SOLOMON]</strong><br>`;
+      let i = 0;
+      const speed = 15; 
+      return new Promise((resolve) => {
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            chat.scrollTop = chat.scrollHeight;
+            setTimeout(type, speed);
+          } else { resolve(); }
+        }
+        type();
+      });
+    }
+
+    function showThinking() {
+      const wrap = document.createElement("div");
+      wrap.className = "msg bot thinking";
+      wrap.id = "thinking";
+      for (let i = 0; i < 3; i++) {
+        const d = document.createElement("div");
+        d.className = "dot";
+        wrap.appendChild(d);
+      }
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function send() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMsg(text, "user");
+      input.value = ""; input.disabled = true; sendBtn.disabled = true;
+      showThinking();
+
+      try {
+        const res = await fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ model: MODEL, prompt: text, stream: false })
+        });
+        const data = await res.json();
+        document.getElementById("thinking")?.remove();
+
+        if (!res.ok || data.error) {
+          addMsg("SYSTEM_FAILURE: " + (data.error || "Kernel Panic"), "bot error");
+        } else {
+          const botDiv = addMsg("", "bot");
+          await typeWriter(data.response, botDiv);
+        }
+      } catch (err) {
+        document.getElementById("thinking")?.remove();
+        addMsg("NETWORK_LOST: " + err.message, "bot error");
+      } finally {
+        input.disabled = false; sendBtn.disabled = false; input.focus();
+      }
+    }
+
+    input.onkeydown = e => { if (e.key === "Enter") send(); };
+  </script>
+</body>
+</html>

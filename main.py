@@ -50,6 +50,7 @@ if __name__ == "__main__":
     import sys
     if "--cli" in sys.argv:
         cli_chat()
+        print("hello guys")
     else:
         print("🚀 Server running at http://localhost:5000")
         print("   Open that URL in your browser to use the chat UI.")

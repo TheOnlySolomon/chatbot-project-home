@@ -1,22 +1,982 @@
 [
   {
-    "id": "game_overview",
-    "text": "Flee the Facility is a Roblox horror game where one player is the Beast and the rest are Survivors. Survivors must find keycards, unlock a hatch, and escape before the Beast catches them all."
+    "id": "overview_general",
+    "text": "Flee the Facility is a free-to-play asymmetrical multiplayer horror game on Roblox, created by Andrew \"MrWindy\" Willeitner under the developer group A.W. Apps. The game launched on July 1st, 2017 and draws clear inspiration from Dead by Daylight's one-hunter-versus-many-survivors formula, translated into Roblox's blocky art style. Each round places one player in the role of the Beast, a hunter who must capture and freeze every other player, against up to four Survivors who must cooperate to hack computers, power the exit doors, and escape before time runs out or everyone is frozen."
   },
   {
-    "id": "role_beast",
-    "text": "The Beast is the single hunter role each round. The Beast can smash through doors and lockers to catch Survivors, and captured Survivors are strapped to a chair until rescued or the round ends."
+    "id": "overview_lobby_flow",
+    "text": "Between rounds, all players gather in a lobby area called Camp Lapis. After a 30-second intermission, the server holds a map vote: four maps are presented on voting plates, and whichever map receives the most votes is loaded next. If two maps tie, the option positioned furthest to the left is chosen. If nobody votes at all, the server simply repeats whatever map was just played, even though it isn't one of the four options shown. Once a map is selected, roles are assigned randomly — one player becomes the Beast and the rest become Survivors — and everyone is teleported into the round."
   },
   {
-    "id": "role_survivor",
-    "text": "Survivors must sneak around the map searching for a hidden keycard, use it to unlock the exit hatch, and escape without being caught by the Beast."
+    "id": "overview_round_start",
+    "text": "At the start of a round, Survivors spawn directly into the map and are given a 15-second head start to scatter and begin searching for computers. During this same window, the Beast is held in a separate holding area called the Beast Cave, unable to affect the round. While waiting, the Beast chooses a Beast Power for the round from whichever options are currently available. Once the 15-second timer expires, the Beast is released into the map from one of several possible spawn points, and the round's central chase begins."
   },
   {
-    "id": "map_facility",
-    "text": "The Facility is the original map in Flee the Facility. It has a maze-like layout with tight corridors, vents, and multiple locker hiding spots."
+    "id": "overview_win_conditions",
+    "text": "Survivors win by cooperatively hacking enough computers to unlock the exit doors and then physically walking through one of those doors. The Beast wins by capturing every Survivor and freezing them solid inside Freeze Pods before the round timer expires or before the Survivors escape. A round can also end if all remaining Survivors escape or are frozen before the full timer runs out. Rounds are capped at roughly 15 minutes, though most matches resolve well before that limit, and players receive credits and XP based on what they accomplished during the round regardless of which side wins."
   },
   {
-    "id": "rescue_mechanic",
-    "text": "A captured Survivor strapped to the chair can be freed by another Survivor who reaches them before the timer runs out."
+    "id": "overview_reception",
+    "text": "Flee the Facility is regarded as one of the more consistently popular asymmetrical horror experiences on the Roblox platform, valued for its replayability, its rotating map pool, and the tension of its cat-and-mouse chase structure. It has also drawn some recurring criticism from players over the years, most commonly about round length, occasional balance issues between the Beast and Survivors on certain maps, and bugs such as players clipping through walls or getting stuck in floor geometry after certain ragdoll interactions. The developers have continued to patch these issues incrementally rather than overhauling the core game loop."
+  },
+  {
+    "id": "role_survivor_basics",
+    "text": "The Survivor is the role assigned to every player who is not chosen as the Beast in a given round. Survivors carry a miniature cosmetic hammer and gemstone on their back — purely decorative versions of the items the Beast and other Survivors can equip — and their core objective is to locate and hack computers scattered around the map while avoiding the Beast. Survivors do not have any combat ability and cannot directly fight back against the Beast; their only tools for survival are movement, stealth, and teamwork."
+  },
+  {
+    "id": "role_survivor_movement",
+    "text": "Survivors have a few movement advantages the Beast does not. They can crawl through Vents, small shafts built into walls throughout every map, giving them an escape route the Beast cannot follow through directly. Survivors can also double jump once every three seconds, a feature added to the game on September 7th, 2023, which lets them clear obstacles, reach ledges, or break vertical line of sight during a chase. Both mechanics are frequently used to break away from a Beast that is closing the distance during a chase sequence."
+  },
+  {
+    "id": "role_survivor_computer_count",
+    "text": "The number of computers a team of Survivors must hack scales with how many Survivors loaded into the round before the head start began: three Survivors must hack 3 of 4 spawned computers, four Survivors must hack 4 of 5, five Survivors must hack 5 of 6, and so on up through larger lobbies. In every case, one extra computer beyond the required number is always present on the map, specifically so the Beast cannot simply camp every required computer location and guarantee a capture. Survivors can still hack that extra computer for bonus XP and credits even after the exit doors are already unlocked."
+  },
+  {
+    "id": "role_survivor_captured",
+    "text": "If the Beast lands a hit with the hammer, the struck Survivor is ragdolled and becomes vulnerable to capture. The Beast then double-clicks the downed Survivor to attach a rope and drags them to the nearest Freeze Pod. Once placed inside a pod, the Survivor is not immediately eliminated — their teammates have a window of time to rescue them before their health depletes fully. A rescued Survivor's health does not reset; if they are captured again later in the round, their health bar continues draining from wherever it left off rather than starting over."
+  },
+  {
+    "id": "role_survivor_rewards",
+    "text": "Survivors are rewarded with credits and XP for specific actions during a round. Being present at a computer the instant it finishes hacking earns 6 credits and 50 XP per Survivor involved. Successfully rescuing a captured teammate from a Freeze Pod grants 20 credits and 100 XP, but only for the first rescue a given Survivor performs in that round — additional rescues in the same round do not grant further credits. Escaping through an opened exit door rewards 25 credits and 300 XP. If a round ends because the timer expired or the Beast disconnected, any Survivor who was neither captured nor frozen is credited as though they had escaped."
+  },
+  {
+    "id": "role_beast_basics",
+    "text": "The Beast is the sole antagonist role each round, appearing in-game as a dark, armored figure with a glowing gemstone embedded in its chest and a large hammer as its weapon. The Beast's overall silhouette is influenced by the player's own avatar along with whichever hammer and gemstone cosmetics they have equipped, so no two Beasts look exactly alike even though the role's core threat is identical. The Beast plays entirely in first-person once released into the map, which affects how the role tracks Survivors compared to the third-person view Survivors typically use."
+  },
+  {
+    "id": "role_beast_headstart",
+    "text": "While Survivors are enjoying their 15-second head start, the Beast is held in the Beast Cave, a small waiting room separate from the main map. During this window the Beast must choose a Beast Power for the round; if no selection is made in time, the game automatically assigns the Runner power by default. Once the head-start timer expires, the Beast is teleported out of the cave into one of several possible spawn locations on the chosen map, and gameplay begins in earnest from that point."
+  },
+  {
+    "id": "role_beast_capture_loop",
+    "text": "The Beast's core gameplay loop is a three-step process repeated against each Survivor: locate them, land a hit with the hammer to ragdoll them, then rope and carry them to the nearest Freeze Pod before another Survivor can intervene. Because the Beast plays in first-person with a wider field of threat but narrower field of view than Survivors, successful Beasts rely heavily on sound cues — computer typing, hacking error alarms, footsteps — and on memorizing common computer and Freeze Pod locations on each map rather than relying purely on sight."
+  },
+  {
+    "id": "role_beast_freeze_pod_distance",
+    "text": "A captured Survivor placed in a Freeze Pod only loses health while the Beast keeps a certain minimum distance away from that pod. If the Beast lingers too close to a Survivor they just captured, the health bar stays red and does not drain, which the community refers to informally as \"camping\" the pod. Moving away lets the health bar turn blue and begin ticking down over roughly 50 seconds until the Survivor is fully frozen. This distance requirement is meant to discourage the Beast from simply standing next to a captured Survivor and guarding them indefinitely, since doing so wastes time that could be spent hunting the remaining Survivors."
+  },
+  {
+    "id": "role_beast_rewards",
+    "text": "As of the 2024 Christmas Update, the Beast earns 200 XP and 25 credits for each Survivor they successfully freeze, which totals 800 XP and 100 credits for a full sweep of four Survivors in a single round. If a Survivor disconnects from the game while already ragdolled or already placed in a Freeze Pod, the Beast is still credited with freezing them as though the capture had been completed normally, so leaving the game mid-capture does not deny the Beast their reward."
+  },
+  {
+    "id": "role_beast_powers_overview",
+    "text": "Beast Powers, sometimes called Beast Perks by the community, are round-long abilities the Beast selects during the head-start window in the Beast Cave. As of the game's current state, three powers are actually selectable in normal play — Runner, Stalker, and Seer — while a fourth power called Hacker exists in the game's files but has not been officially released or made selectable. Powers are activated in-game with a dedicated button: Q on PC and mobile, Y on console, and the triangle button on PlayStation."
+  },
+  {
+    "id": "power_runner",
+    "text": "Runner is the default Beast Power, automatically assigned if the Beast fails to choose one before the head-start timer ends. When activated, Runner grants the Beast a large temporary speed boost, during which jumping is disabled and the Beast becomes immune to hitstun. The cooldown between hammer swings is also shortened for the duration of the power, letting an aggressive Beast close distance quickly and follow up hits faster than normal. If Runner is triggered while the Beast is already mid-recovery from a jump, the recovery animation is cancelled early in exchange for a shorter, one-second version of the speed boost."
+  },
+  {
+    "id": "power_stalker",
+    "text": "Stalker is a passive-style Beast Power that reduces the radius at which Survivors can hear the Beast's heartbeat sound cue by 5 studs, making it noticeably harder for Survivors to gauge how close the Beast actually is before it's too late. Community guides note that Stalker is especially effective when paired with an avatar that uses a single, dark, uniform color, since it also reduces the Beast's visual glow, making it blend into darker maps more easily and denying Survivors both the audio and visual warning they'd normally rely on."
+  },
+  {
+    "id": "power_seer",
+    "text": "Seer is a Beast Power oriented around information gathering rather than raw speed or stealth. While it is active, the Beast gains some form of enhanced awareness of nearby Survivors, which is why Survivor strategy guides commonly recommend using enclosed hiding spots such as lockers, leaf piles, and snow piles specifically to counter a Beast that has chosen Seer for the round, since breaking direct line of sight is the primary way to deny the power's benefit."
+  },
+  {
+    "id": "power_hacker_unreleased",
+    "text": "Hacker is the fourth Beast Power referenced in the game's Beast Powers system but is not currently available for players to select in normal matches. It exists as a known, named entry in the same list as Runner, Stalker, and Seer, which suggests the developers have planned or partially built it, but as of the current build only the other three powers can actually be chosen during the head-start selection window."
+  },
+  {
+    "id": "mechanic_computers",
+    "text": "Computers are interactive stations placed throughout every map that Survivors must hack to power the exit doors. To begin hacking, a Survivor stands in front of a computer's keyboard and presses E on PC or the equivalent face button on console, which starts a typing animation and a progress bar. While hacking, a Skill Check occasionally appears on screen that the Survivor must calibrate correctly and in time; failing a Skill Check causes the computer to audibly \"blow up,\" playing an error sound heard by every player in the server, including the Beast, and turning the computer's screen red, which effectively broadcasts that Survivor's location to the entire map."
+  },
+  {
+    "id": "mechanic_computer_count_formula",
+    "text": "Every map spawns one more computer than is strictly required to unlock the exit doors — the total is always Survivor count plus one. This buffer exists deliberately so the Beast cannot simply memorize and guard every required computer location and guarantee a capture; Survivors have some flexibility in which computers they actually commit to hacking. If players disconnect partway through a round, the number of computers still required to open the exits can decrease correspondingly, so a shrinking team isn't stuck with an impossible objective."
+  },
+  {
+    "id": "mechanic_exit_doors",
+    "text": "Exit Doors are special doors present on every map that remain locked until the required number of computers has been hacked. Once the threshold is met, a distinct high-pitched beep followed by an electronic click or whoosh sound plays for the entire server, and two yellow door icons appear on-screen to help Survivors locate the nearest exit. Each unlocked Exit Door takes about 12 seconds to physically open once a Survivor begins interacting with it, but once opened by anyone, it stays open for the remainder of the round. Walking through an open Exit Door immediately returns a Survivor to Camp Lapis as a win; if the Beast walks through one, nothing happens."
+  },
+  {
+    "id": "mechanic_freeze_pods",
+    "text": "Freeze Pods are the machines the Beast uses to permanently eliminate captured Survivors. After roping a ragdolled Survivor, the Beast carries them to a nearby pod and presses E to lock them inside. From that point, provided the Beast keeps enough distance for the health bar to turn blue, the Survivor's health drains over roughly 50 seconds until it hits zero, at which point they are considered fully frozen, their character turns blue, and they are removed from the round and returned to Camp Lapis. A single Freeze Pod cannot be reused once a Survivor has been fully frozen in it for the remainder of that round."
+  },
+  {
+    "id": "mechanic_rescue",
+    "text": "A Survivor who has been placed in a Freeze Pod but has not yet fully frozen can be freed by any other Survivor who reaches the pod and interacts with it. Doing so removes the captured teammate from the pod and returns them to active play, though their health does not reset to full — if captured again later, it resumes draining from the point it previously stopped. Only the first successful rescue a given Survivor performs in a round earns them credits and XP; subsequent rescues in the same round are still valuable strategically but don't grant additional currency rewards."
+  },
+  {
+    "id": "mechanic_credits",
+    "text": "Credits are the primary in-game currency of Flee the Facility, earned by completing objectives during a round and spent on cosmetic items from crates or event bundles. Hacking a computer at the moment it completes earns 6 credits, rescuing a captured Survivor earns 20 credits (once per round), and escaping through an exit door earns 25 credits. On the Beast's side, freezing a Survivor rewards 25 credits per capture. If a round ends by timeout or Beast disconnection, any Survivor who hasn't been captured or frozen is credited as though they escaped, receiving the associated reward."
+  },
+  {
+    "id": "mechanic_levels_xp",
+    "text": "Levels track a player's overall progress and are earned by accumulating XP through the same objective-based rewards that grant credits: hacking computers, rescuing teammates, escaping, and freezing Survivors as the Beast. From Level 1 through Level 10, the amount of XP required to reach the next level increases by 400 XP per level. From Level 10 onward, the requirement plateaus and is capped at a flat 4,000 XP per level. Players with the VIP gamepass earn 15% more XP per round than players without it, which accelerates leveling over time. Certain milestone levels unlock access to special areas."
+  },
+  {
+    "id": "mechanic_crates_pricing",
+    "text": "Crates are how players acquire new cosmetic hammers and gemstones, purchased with credits. There are two categories: H Crates, which contain only hammer cosmetics, and G Crates, which contain only gemstone cosmetics. Some crates are limited-time only, tied to specific seasonal events. Items inside crates are grouped by rarity with roughly fixed prices: Common items cost about 100 credits, Rare items about 200, Epic items about 400, and Legendary items about 700, with the higher-rarity items being correspondingly less likely to be obtained from a purchase."
+  },
+  {
+    "id": "mechanic_crates_history",
+    "text": "Crate purchases originally used a randomized reveal animation: buying a crate would rapidly flash through a list of possible items on screen until the player pressed \"Stop,\" at which point whichever item was currently displayed was awarded to their inventory. This gambling-style mechanic was removed on October 21st, 2023, specifically to comply with newer Roblox platform guidelines intended to protect players in regions with stricter regulations around chance-based purchases. Since that change, each item in a crate has a fixed, visible price and can be bought individually and directly rather than through a randomized spin."
+  },
+  {
+    "id": "mechanic_hammers_gemstones",
+    "text": "Hammers and Gemstones are the two categories of cosmetic items in Flee the Facility. Hammers are the melee weapon skin visibly carried and swung by whoever is playing the Beast that round, while Gemstones are decorative back accessories visible on Survivors and as the glowing chest piece on the Beast. Both categories are purely cosmetic and carry no gameplay advantage — a Legendary-rarity hammer swings and hits identically to a Common one. Players collect them through crates, event bundles, and occasionally through achievements or special quests."
+  },
+  {
+    "id": "mechanic_doors_windows_vents",
+    "text": "Maps are laced with several types of interactive obstacles Survivors and the Beast use during chases. Regular Doors can be opened and closed by either side and are commonly used to slow a pursuer or force them to guess a Survivor's route, though the Beast opens doors faster than Survivors can, and doors cannot be closed on someone standing directly in the doorway. Windows can be jumped through by both roles, but the Beast suffers a brief slowdown after each jump, giving Survivors who use windows tactically a small window of advantage. Vents are narrow crawlspaces that only Survivors can use, giving them an escape route the Beast cannot follow through directly."
+  },
+  {
+    "id": "mechanic_cabinets",
+    "text": "Cabinets are hiding-spot furniture found throughout most maps, allowing a Survivor to duck inside and break the Beast's line of sight during a chase. Their exact model and placement differ from map to map, and some maps such as Homestead and Haunted Mansion have multiple distinct cabinet and vent models used throughout different areas of the same map rather than a single repeated model. Skilled Survivors use cabinets strategically rather than as a first resort, since a Beast that is actively searching nearby can simply check cabinets directly."
+  },
+  {
+    "id": "mechanic_skill_checks",
+    "text": "Skill Checks are the timing-based mini-game element that appears periodically while a Survivor is hacking a computer. The player must react and calibrate correctly within a short window; succeeding keeps the hack progressing normally and silently, while failing causes the computer to \"blow up\" — triggering a loud, server-wide error sound and turning the screen red, which reveals that computer's location to the Beast and interrupts whichever Survivors were working on it. Skill Checks are the main source of risk during an otherwise safe-feeling task, and consistently landing them is one of the clearest ways a Survivor player can improve."
+  },
+  {
+    "id": "mechanic_main_menu",
+    "text": "The Main Menu is the central hub players use outside of active rounds to manage their account and cosmetics. From the Main Menu, players can buy items from crates, review their owned hammers and gemstones, purchase additional credits using Robux, donate to support the game, check their current level and XP progress toward the next level, mute in-game music, and adjust their odds of being selected as the Beast for the next round — this last option lets a player spend a small amount of Robux to slightly increase or decrease their personal chance of becoming the Beast."
+  },
+  {
+    "id": "mechanic_vip",
+    "text": "VIP is a gamepass purchasable with Robux that grants several passive benefits across matches: a visible VIP name tag and badge, a unique VIP-themed Ban Hammer skin that is purely cosmetic and does not actually ban other players despite its name, a distinct VIP gemstone, double weight on the player's map vote, 15% more XP earned per round, and 15% more credits earned per round. According to community documentation, VIP benefits require rejoining the game server after purchase to actually take effect."
+  },
+  {
+    "id": "mechanic_chat_and_special_servers",
+    "text": "Flee the Facility includes an in-game Chat System for players to communicate during the lobby and round phases, subject to Roblox's platform-wide chat filtering. The game also supports Special Servers, which are separate server configurations — such as private or VIP-only servers — that let groups of players, such as friends or a Discord community, play together outside the standard public matchmaking pool. A separate Trading Post mechanic allows players to trade hammer and gemstone cosmetics with one another rather than only acquiring them directly through crates."
+  },
+  {
+    "id": "mechanic_double_jump_crawling",
+    "text": "Two Survivor-exclusive movement mechanics define much of the game's chase dynamics: Double Jump, which lets a Survivor jump twice within a short window once every three seconds and was added to the game on September 7th, 2023, and Crawling, the act of entering a Vent to move through a narrow crawlspace inaccessible to the Beast. Both mechanics exist specifically to give Survivors tools to break a chase that the Beast cannot directly counter, reinforcing the asymmetrical design where Survivors rely on agility and route knowledge rather than any combat capability."
+  },
+  {
+    "id": "map_facility_0",
+    "text": "Facility_0 is the original map of Flee the Facility, introduced on July 1st, 2017 as the only map available at launch, remaining the sole option until a second map was added that September. Created by MrWindy, it depicts a simplistic industrial facility built from mostly greyscale rooms and corridors, wrapped in a grey fog effect that was added in a later update after the map originally shipped without any fog at all. Facility_0 contains twelve potential computer locations and twelve potential Freeze Pod locations, and received rebalancing changes as part of the game's 3rd Anniversary update on July 18th, 2020, including an additional door and a reworked back hallway."
+  },
+  {
+    "id": "map_homestead",
+    "text": "Homestead was added on October 18th, 2018 as the fourth map in the game's history and was created by MrWindy himself. It depicts a dark, mostly outdoor rural property featuring two abandoned houses, a barn, a garage, and a hedge maze, wrapped in brown fog. The map is themed after an actual homestead owned by MrWindy's family in Preston, Idaho, and the barn model was reportedly inspired by a real barn on that property that was destroyed in a snowstorm. Homestead has ten potential computer locations and nine potential Freeze Pod locations, and is generally considered a challenging, less popular map among the community due to its darkness and terrain that favors players who know how to exploit jump-based obstacles."
+  },
+  {
+    "id": "map_airport",
+    "text": "Airport is one of the largest maps in Flee the Facility, modeled after a commercial airport terminal with distinct zones such as check-in counters, security checkpoints, boarding gates, and a luggage carousel. Its long, wide hallways make it difficult for a spotted Survivor to break line of sight compared to more maze-like maps, though the presence of shops, restrooms, and VIP lounges offers detour routes. Because of its scale, the Beast must manage patrol time carefully, since Airport's two exit gates are spaced far apart, which often lets a coordinated Survivor team split up and escape through separate exits simultaneously."
+  },
+  {
+    "id": "map_the_library",
+    "text": "The Library is a map generally regarded by the community as one of the more difficult layouts to learn, owing to a confusing, maze-like arrangement of rooms and corridors. Community discussion around the map frequently notes that computer placements tend to be either clustered very close together or spread unusually far apart with little in-between, and that it carries slightly more environmental fog than most other maps. Because it's voted for less often than more popular maps, many players simply never build up the map knowledge needed to navigate it comfortably, which contributes to its reputation as one of the trickier maps to both play and to hunt on as the Beast."
+  },
+  {
+    "id": "map_haunted_mansion",
+    "text": "Haunted Mansion was added to the game on November 8th, 2022 as the tenth map, created by a community member known as BreifAwesomeDude. It's set inside and around the courtyards of a large, condemned mansion spanning a basement and two additional floors, decorated with orange and yellow leaf piles scattered around the exterior grounds and wall murals referencing various other Roblox games and community members. A plum-colored fog blankets the entire map. Haunted Mansion contains nine potential computer locations and nine potential Freeze Pod locations, and its computers emit a distinctive humming, static-like sound when a Survivor is nearby, differing from the typing sound used on most other maps."
+  },
+  {
+    "id": "map_school",
+    "text": "School is a community-created map, built by a creator known as Shortfingers, that recreates a school building with narrow, locker-lined hallways contrasted against large open spaces such as a gymnasium and an auditorium. The mix of tight corridors and open rooms creates a layout where certain classrooms function as effective dead ends, occasionally letting the Beast corner a Survivor who ducks into the wrong room during a chase. School is generally considered friendlier to Survivors thanks to its relatively high number of hiding spots and multiple viable escape routes."
+  },
+  {
+    "id": "map_nuclear_power_plant_remake",
+    "text": "Nuclear Power Plant, originally created by SonicUnkn0wn and posyonose, introduced two gameplay features not found on any other map at the time of its release: a monitor room where a player can sit and cycle through a network of in-map security cameras, and a separate power room containing four buttons that control the map's lighting, allowing players to turn the map's lights on or off. The map was later reworked into an official remake version, Nuclear Power Plant (Remake), which is the current iteration players encounter in the standard map rotation."
+  },
+  {
+    "id": "map_arcade",
+    "text": "Arcade is one of the more recent additions to the current 15-map rotation, styled around a neon-lit indoor arcade environment, contrasting with the darker, more industrial tone of many of the game's older maps. Its bright, colorful lighting and dense arrangement of arcade cabinets and gaming stations create a visually distinct chase environment compared to the greys and browns of maps like Facility_0 or Homestead, and its layout is commonly cited by players as one of the more visually memorable additions to the map pool."
+  },
+  {
+    "id": "map_arctic_station",
+    "text": "Arctic Station is a snow and ice-themed map set in a remote research outpost, part of the current map rotation. Its environment includes snow piles that function as Survivor hiding spots similar to leaf piles on Haunted Mansion, and its cold, isolated setting places it thematically alongside other outpost or facility-style maps in the game's overall roster, distinguishing it visually from the urban and rural settings used by maps like Airport, School, or Homestead."
+  },
+  {
+    "id": "map_abandoned_prison_maximus",
+    "text": "Abandoned Prison Maximus is the current, larger-scale version of the prison-themed map concept in Flee the Facility, succeeding the original Abandoned Prison map that has since been removed from rotation. Like other prison-styled environments in the game, it relies heavily on rows of cells, narrow corridors, and enclosed spaces that create tense, close-quarters encounters between the Beast and Survivors, differing from the more open layouts found on maps like Airport."
+  },
+  {
+    "id": "map_sanctuary_zoo",
+    "text": "Sanctuary Zoo is a zoo-themed map in the current rotation, set across the grounds and enclosures of an animal sanctuary. Its layout combines outdoor pathways between exhibit areas with indoor structures such as visitor buildings, giving Survivors a mix of open ground to cover and enclosed rooms to hide and hack computers within, similar in spirit to how Homestead blends outdoor and indoor spaces but themed around a completely different setting."
+  },
+  {
+    "id": "map_spaceship",
+    "text": "Spaceship is a science-fiction themed map set aboard a spacecraft, offering one of the more visually distinct settings in the game compared to its otherwise earthbound locations. Its interior corridors and rooms are built to evoke a sci-fi vessel rather than an industrial facility or a residential property, giving the Beast and Survivors a tighter, more enclosed environment to navigate than open maps like Airport or Sanctuary Zoo."
+  },
+  {
+    "id": "map_ghost_town",
+    "text": "Ghost Town is a Western-themed map depicting an abandoned frontier settlement, complete with the kind of saloons, storefronts, and dusty open streets associated with an old-west ghost town. Its mixture of open street layouts and enclosed building interiors gives it a hybrid feel between the wide-open pacing of Airport and the more compartmentalized room-to-room structure of maps like School or Haunted Mansion."
+  },
+  {
+    "id": "map_shopping_center",
+    "text": "Shopping Center is a mall-themed map set inside a multi-store shopping complex, one of the currently trending and frequently voted-for maps according to community wiki activity. Its layout draws on the familiar structure of a shopping mall — storefronts, open concourses, and back-of-house areas — to create varied sightlines and hiding opportunities, and it's frequently listed alongside Facility_0 and Airport as one of the maps with the most active community attention on the wiki."
+  },
+  {
+    "id": "map_abandoned_facility_optimus",
+    "text": "Abandoned Facility Optimus is the current, expanded version of the abandoned-facility map concept, following after the original Abandoned Facility and its subsequent Abandoned Facility Remake, both of which have since been retired from the standard rotation. Optimus represents the latest iteration of this recurring map family, continuing the grey, industrial factory aesthetic established by Facility_0 while introducing its own distinct layout and room arrangement."
+  },
+  {
+    "id": "map_backrooms_event",
+    "text": "Backrooms is a limited-time event map based on the internet's \"Backrooms\" urban legend aesthetic — an endless, disorienting space of identical yellow-walled rooms with no clear layout logic. It was originally added to the game as a ninth permanent map but was pulled from the regular rotation after community feedback described it as excessively disorienting, since it lacks defined rooms or color-coded walls to help with navigation, and some doors were found to lead to unsettling dead ends featuring nothing but two glowing red eyes. It also had bug issues where the game's anti-cheat system would sometimes incorrectly kick players who encountered those dead-end doors. Since 2024, the Backrooms map has returned as a recurring limited-time Halloween event map rather than a permanent fixture, and it also made a special reappearance during a Spring 2026 event."
+  },
+  {
+    "id": "map_toy_workshop_event",
+    "text": "Toy Workshop is a winter-season limited-time event map set inside a festive toy-making workshop, featuring conveyor belts running between rooms and gifts scattered throughout the environment. Its release had originally been planned as far back as 2022 but was delayed, ultimately launching in early 2026. Compared to many of the game's darker, fog-heavy maps, Toy Workshop is unusually well-lit, and its relatively sparse vent placement makes it comparatively harder for a spotted Survivor to break away from the Beast once a chase has started."
+  },
+  {
+    "id": "map_removed_abandoned_prison",
+    "text": "Abandoned Prison was an earlier prison-themed map that has since been removed from the game's standard rotation, later succeeded conceptually by the current Abandoned Prison Maximus map. As with other removed maps, its retirement reflects the developers' tendency to replace older layouts with expanded or rebalanced versions rather than permanently retiring a map's theme altogether."
+  },
+  {
+    "id": "map_removed_abandoned_facility",
+    "text": "Abandoned Facility was one of the original wave of maps added to Flee the Facility and has since been removed, having first been succeeded by Abandoned Facility Remake and eventually by the current Abandoned Facility Optimus. The repeated remaking of this particular map across multiple versions reflects its status as one of the more foundational, frequently revisited map concepts in the game's history."
+  },
+  {
+    "id": "map_removed_forgotten_facility",
+    "text": "Forgotten Facility was a map that has since been fully removed from Flee the Facility's rotation without a direct successor map carrying its exact name forward, unlike Abandoned Facility or Abandoned Prison, which were both eventually replaced by newer versions bearing similar names."
+  },
+  {
+    "id": "map_removed_laboratory_complex",
+    "text": "Laboratory Complex was a science-facility-themed map that has been removed from the current map pool. Alongside Sewer Treatment Plant, it represents one of the more utilitarian, industrial-themed maps that were part of the game's map pool at various points before being retired as the developers refreshed the overall map lineup."
+  },
+  {
+    "id": "map_removed_sewer_treatment_plant",
+    "text": "Sewer Treatment Plant was a removed map themed around an industrial water treatment and sewer facility. Like other retired maps, it's no longer selectable in the standard map vote, though it remains documented in community wiki records as part of the game's broader map history alongside other retired industrial and facility-themed locations."
+  },
+  {
+    "id": "history_launch_and_early_growth",
+    "text": "Flee the Facility launched on July 1st, 2017 with a single map, Facility_0, which remained the only available map until September 10th, 2017, when a second map was introduced, finally giving the map-voting system something to actually vote between. This early period established the game's core loop — hack computers, avoid the Beast, escape — which has remained fundamentally unchanged even as the map pool, cosmetic systems, and Beast Powers have all expanded significantly since launch."
+  },
+  {
+    "id": "history_map_expansion",
+    "text": "Over the years following launch, the developers steadily grew the map pool well beyond the original single map, both through in-house map design and through community-created maps submitted by outside creators such as Shortfingers (School) and BreifAwesomeDude (Haunted Mansion). Community members can submit original map concepts through A.W. Apps' official submissions server, where maps are tested and reviewed before potentially being added into the live game, meaning the current 15-map rotation reflects contributions from both the core development team and the wider player community."
+  },
+  {
+    "id": "history_3rd_anniversary_update",
+    "text": "On July 18th, 2020, Flee the Facility received its 3rd Anniversary update, which included rebalancing changes to Facility_0, the game's original map — notably adding an extra door and reworking part of its back hallway layout. Anniversary updates have recurred as a pattern throughout the game's history, typically bundling cosmetic celebrations with smaller gameplay refinements to older, established maps rather than introducing entirely new systems."
+  },
+  {
+    "id": "history_double_jump_addition",
+    "text": "The double jump mechanic, which lets Survivors jump twice within a short window once every three seconds, was added to the game on September 7th, 2023. This update gave Survivors a meaningfully new tool for breaking vertical line of sight and clearing obstacles during chases, expanding their movement toolkit beyond crawling through vents, and has since become one of the defining, universally-relied-upon Survivor techniques."
+  },
+  {
+    "id": "history_crate_system_change",
+    "text": "On October 21st, 2023, the developers removed the randomized \"Stop\" animation previously used when opening crates, replacing it with a system where every item inside a crate has a fixed, visible price and can be purchased directly and individually. This change was made specifically to comply with newer Roblox platform guidelines aimed at protecting players in regions with stricter regulations around gambling-adjacent, chance-based purchase mechanics, effectively converting the crate system from a loot-box style mechanic into a straightforward cosmetic shop."
+  },
+  {
+    "id": "history_2024_christmas_update",
+    "text": "The 2024 Christmas Update introduced the current Beast reward structure for freezing Survivors, setting the reward at 200 XP and 25 credits per frozen Survivor, for a potential total of 800 XP and 100 credits if the Beast freezes an entire team of four in a single round. Like many of the game's seasonal updates, it combined this gameplay-facing change with limited-time holiday cosmetic bundles available during the event window."
+  },
+  {
+    "id": "history_6th_anniversary_update",
+    "text": "The game's 6th Anniversary update, themed around an aquatic celebration, introduced a pink anniversary-themed cosmetic bundle alongside four additional aquatic-themed bundles and dedicated aquatic hammer and gemstone crates. The same update era saw the addition of two community-created maps, School by Shortfingers and Nuclear Power Plant by SonicUnkn0wn and posyonose, along with balance changes such as increased ragdoll \"flop\" power and a bug fix addressing an issue that could cause a player's credit total to go negative when purchasing a bundle or crate item."
+  },
+  {
+    "id": "history_seasonal_events_pattern",
+    "text": "A.W. Apps runs a recurring calendar of seasonal in-game events throughout the year, including Valentine's Day, a combined Valentine's and Lunar New Year event, Halloween (which brings back the limited-time Backrooms map), Christmas, and Spring events. Each event typically introduces limited-time cosmetic bundles, themed hammers and gemstones, and occasionally a themed challenge or quest offering exclusive rewards, with official announcements for these events historically posted through A.W. Apps' account on X (formerly Twitter)."
+  },
+  {
+    "id": "history_no_code_system",
+    "text": "As of the current build, Flee the Facility does not have any active promotional code redemption system, meaning cosmetics and currency can only be earned by playing rounds and purchasing crates with credits, or by spending Robux directly. Community guides explicitly warn players to be wary of third-party websites claiming to offer working \"codes\" for the game, since no legitimate code-based reward system currently exists within Flee the Facility itself."
+  },
+  {
+    "id": "event_arsenal_collab",
+    "text": "Flee the Facility has hosted a crossover event with the Roblox game Arsenal, in which players could complete a quest requiring them to find missing Arsenal-themed pieces scattered within Flee the Facility, rewarding participants with exclusive crossover-themed cosmetics tied to the Arsenal collaboration."
+  },
+  {
+    "id": "event_dress_to_impress_collab",
+    "text": "A separate crossover event paired Flee the Facility with the popular Roblox game Dress to Impress, running as a limited-time quest players could complete between January 19th and February 9th, 2026. Completing the Dress to Impress crossover quest granted players exclusive rewards tied to that specific collaboration event."
+  },
+  {
+    "id": "event_pig_64_quest",
+    "text": "The Pig 64 Retro Quest is a themed quest event referenced in the game's mechanics documentation, part of the broader pattern of limited-time quests A.W. Apps periodically introduces to give players extra objectives and exclusive rewards beyond the standard round-based credit and XP loop."
+  },
+  {
+    "id": "event_valunar_2026",
+    "text": "Valunar 2026 is a combined Valentine's Day and Lunar New Year-themed event, bundling exclusive hammer and gemstone cosmetics with a dedicated challenge offering additional elusive rewards for players who complete it, continuing the pattern of A.W. Apps merging overlapping calendar holidays into a single combined seasonal event rather than running them entirely separately."
+  },
+  {
+    "id": "event_halloween_2025",
+    "text": "Halloween Challenges 2025 was the game's Halloween-season event, which — following the established pattern for this holiday — brought back the limited-time Backrooms map as a seasonal attraction alongside Halloween-specific cosmetic bundles and challenges for players to complete during the event's live window."
+  },
+  {
+    "id": "event_easter_egg_hunt",
+    "text": "Easter Egg Hunt is a seasonal quest-style event referenced among the game's documented mechanics, following the broader pattern of A.W. Apps introducing lightweight, time-limited objectives tied to real-world holidays as a way of keeping returning players engaged between major content updates."
+  },
+  {
+    "id": "creator_info",
+    "text": "Flee the Facility was created by Andrew \"MrWindy\" Willeitner, operating under the Roblox developer group A.W. Apps, which Roblox Corporation recognizes as a verified, notable community developer. Beyond Flee the Facility, A.W. Apps has published other Roblox experiences, including a game called Project: Lazer0, which has accumulated millions of visits of its own, reflecting A.W. Apps' broader track record within the Roblox development community beyond this single title."
+  },
+  {
+    "id": "community_fan_projects",
+    "text": "Flee the Facility's popularity has spawned independent, fan-made spinoff experiences on Roblox, most notably 10 Player Flee the Facilities, an unofficial variant built by separate community developers that scales the core formula up to larger lobbies of eight Survivors against two simultaneous Beasts, rather than the official game's standard cap of four Survivors and one Beast. These fan projects maintain their own separate wikis and communities distinct from the official game, and should not be confused with official A.W. Apps content or updates."
+  },
+  {
+    "id": "community_wiki_ecosystem",
+    "text": "The game supports an active fan wiki hosted on Fandom, documenting mechanics, maps, history, and cosmetics in ongoing detail as the game continues to receive updates. Separate, related wikis exist for fan-made spinoffs such as 10 Player Flee the Facilities and for fan-fiction-adjacent content such as the Forsaken Fanon Wiki's take on the Beast character, reflecting a broader, layered fan community built up around the core game over its multi-year lifespan."
+  },
+  {
+    "id": "community_bugs_reported",
+    "text": "Across its history, players have reported a recurring set of bugs and glitches, including Survivors or the Beast becoming stuck inside wall geometry, ragdoll physics occasionally launching a downed Survivor across the map in an unintended \"flop,\" broken or unresponsive computer interactions, and rare instances where the Beast spawns into a round without its hammer model attached. Players who fall entirely outside a map's boundaries are typically auto-teleported back into the play area rather than being permanently stuck."
+  },
+  {
+    "id": "controls_pc",
+    "text": "On PC, Survivors and the Beast share the same base movement controls — WASD to move, Space to jump — while E is the primary interact key, used to hack computers, open doors and exit doors, rescue teammates from Freeze Pods, and place a captured Survivor into a pod as the Beast. Beast Powers are activated with Q. Players can press M at any time to open a map overlay showing their current location along with known computer and exit door positions."
+  },
+  {
+    "id": "controls_mobile",
+    "text": "On mobile devices, Flee the Facility uses on-screen touch controls: a virtual joystick for movement, a jump button, and a context-sensitive interact button that mirrors PC's E key for hacking, opening doors, and handling Freeze Pod interactions. Beast Powers are triggered with a dedicated on-screen Q button in the same position and function as its PC counterpart, and the map overlay remains accessible through its own on-screen button equivalent to the PC M key."
+  },
+  {
+    "id": "controls_console",
+    "text": "On console platforms, Flee the Facility maps its interact function to a face button — X on Xbox and the square button on PlayStation — used identically to PC's E key for hacking computers, interacting with doors, and handling Freeze Pod actions. Beast Powers are activated with Y on Xbox controllers and the triangle button on PlayStation controllers, mirroring the same functional layout used across PC and mobile despite the different physical button labels."
+  },
+  {
+    "id": "strategy_survivor_doors",
+    "text": "A commonly repeated piece of Survivor strategy is to always close doors behind you while moving through a map. An open door effectively reveals your recent path to a Beast who passes by later, while a closed door forces the Beast to guess your route rather than simply following a trail of open doorways, buying Survivors extra time even when the Beast is actively searching the correct general area."
+  },
+  {
+    "id": "strategy_survivor_computer_order",
+    "text": "Experienced Survivors often recommend prioritizing computers that are farther from the Beast's current position early in the round, saving computers located near the exit doors for last. This way, the final computer hacked is close to an exit, letting a Survivor escape almost immediately after triggering the exit doors' unlock sequence, rather than having to cross the entire map while the Beast is actively hunting near a now-revealed exit."
+  },
+  {
+    "id": "strategy_survivor_audio_awareness",
+    "text": "Because computer error sounds, Beast footsteps, and hammer swings are all audible server-wide or at range, experienced Survivors treat sound as at least as important as visual awareness. Listening for a nearby Beast's footsteps, or for a failed Skill Check alarm coming from another part of the map, often provides more useful, real-time information than trying to visually track the Beast's position directly."
+  },
+  {
+    "id": "strategy_survivor_split_hacking",
+    "text": "Rather than having the whole team hack computers in the same cluster of rooms, splitting up across different areas of the map makes it much harder for the Beast to camp any single location and guarantee captures. This spreads risk across the team and forces the Beast to choose which area to patrol, rather than letting them lock down one obviously high-traffic zone."
+  },
+  {
+    "id": "strategy_survivor_hiding_vs_seer",
+    "text": "Against a Beast using the Seer power, breaking direct line of sight is the most reliable counter. Community guides specifically recommend using enclosed hiding spots — lockers, bushes, leaf piles on maps like Haunted Mansion, and snow piles on maps like Arctic Station — since crouching behind an object to break sightlines denies much of the benefit Seer would otherwise provide the Beast."
+  },
+  {
+    "id": "strategy_survivor_rescue_timing",
+    "text": "Rescuing a captured teammate is high-value but risky, since a Beast that is actively guarding or patrolling near a Freeze Pod can easily capture the rescuer too, turning one capture into two. The generally recommended approach is to wait until the Beast has clearly moved on to chase or search elsewhere before attempting a rescue, rather than rushing in the moment a teammate is captured."
+  },
+  {
+    "id": "strategy_beast_map_memorization",
+    "text": "Because the Beast plays in first-person with a comparatively narrow field of view, strong Beast play depends heavily on memorizing map layouts — or at minimum, memorizing the major hotspots on each map such as computer clusters, exit door locations, and Freeze Pod positions. A Beast who doesn't know a map well will waste critical time exploring rather than hunting, giving Survivors a much larger effective head start than the official 15 seconds."
+  },
+  {
+    "id": "strategy_beast_camera_checks",
+    "text": "On maps like Nuclear Power Plant that include a security camera system, checking available cameras early and periodically throughout the round gives the Beast valuable intelligence on Survivor positions without having to physically patrol every room, functioning as a force-multiplier for Beast players who take the time to use it consistently rather than ignoring the feature."
+  },
+  {
+    "id": "strategy_beast_predicting_movement",
+    "text": "Because Survivors have both double jump and vent crawling available to break a direct chase, effective Beast players focus on predicting where a fleeing Survivor is likely to go next — toward a nearby vent, a known shortcut, or a loop around a central obstacle — rather than trying to simply out-run them in a straight line, since raw speed alone is rarely enough to catch a Survivor who knows the map's shortcuts."
+  },
+  {
+    "id": "strategy_beast_exit_patrol",
+    "text": "Once the required number of computers has been hacked and the exit doors unlock, the Beast should generally expect Survivors to converge on the exits and should weigh patrolling near those doors against continuing to hunt scattered Survivors elsewhere on the map, since guides note that the Beast typically shifts toward camping exit areas once computers are cleared, as that's where the remaining Survivors are now most likely headed."
+  },
+  {
+    "id": "strategy_beast_power_choice",
+    "text": "Choosing a Beast Power is a round-defining decision made during the head-start window. Runner favors an aggressive, close-the-distance playstyle well suited to open maps like Airport, Stalker rewards a stealthier approach on darker maps where reduced heartbeat range and glow matter more, and Seer favors a Beast who wants map-wide information at the cost of the raw mobility or stealth the other two powers provide."
+  },
+  {
+    "id": "faq_official_vs_10_player",
+    "text": "Flee the Facility, the official game by A.W. Apps, supports up to five players per round — four Survivors and one Beast. It should not be confused with 10 Player Flee the Facilities, which is a separate, unofficial fan-made experience built by different developers that scales the formula up to eight Survivors and two simultaneous Beasts. Both games share the same core hack-and-escape loop but are maintained independently of one another."
+  },
+  {
+    "id": "faq_computer_formula_recap",
+    "text": "A frequently asked question is how many computers actually need to be hacked in a given round. The answer follows a simple formula: the number of computers required equals the number of Survivors present, while the total number of computers spawned on the map equals that number plus one. For example, with four Survivors, five computers spawn in total but only four need to be hacked to unlock the exits, and any Survivor on the team can contribute toward hacking any of the available computers."
+  },
+  {
+    "id": "faq_frozen_survivor_status",
+    "text": "Once a Survivor's health bar in a Freeze Pod reaches zero, they are considered fully frozen: their character turns blue, a message announces they are frozen, and they can no longer be rescued by teammates for the remainder of that round. They are removed from active play and sent back to Camp Lapis, and the specific Freeze Pod that froze them cannot be reused again during that same round."
+  },
+  {
+    "id": "faq_cosmetics_gameplay_impact",
+    "text": "A common question new players ask is whether higher-rarity hammers or gemstones provide any actual gameplay advantage. They do not — all hammers and gemstones in Flee the Facility are purely cosmetic, affecting only visual appearance. Rarity influences how difficult an item is to obtain from a crate, not how it performs in a round; a Legendary hammer swings identically to a Common one."
+  },
+  {
+    "id": "faq_beast_selection_odds",
+    "text": "Every player entering a round has some baseline chance of being selected as the Beast, and the Main Menu includes a feature letting players spend a small amount of Robux to slightly adjust their personal odds of becoming the Beast in the next round, either increasing or decreasing that likelihood. This system does not guarantee a specific outcome, only a modest shift in probability."
+  },
+  {
+    "id": "faq_beast_jump_slowdown",
+    "text": "Players sometimes ask why their Beast feels sluggish right after jumping through a window or over an obstacle. This is an intentional balancing mechanic: the Beast suffers a brief movement slowdown after each jump, in contrast to Survivors, who face no such penalty. Because of this, experienced Beast players are advised to release the sprint key before jumping wherever possible, since combining the two can compound the slowdown at an inopportune moment during a chase."
+  },
+  {
+    "id": "faq_rescuer_reward_limit",
+    "text": "Players are often surprised to learn that rescuing multiple teammates in the same round only pays out credits and XP for the first successful rescue. This is intentional design meant to reward taking the initiative to rescue at all, without turning \"rescue farming\" into an unlimited credit-generation strategy within a single round."
+  },
+  {
+    "id": "faq_map_vote_tie_rule",
+    "text": "When a map vote ends in a tie between two or more options, the game resolves it by selecting whichever tied option is positioned furthest to the left among the voting plates or menu options, rather than picking randomly among the tied choices or re-running the vote."
+  },
+  {
+    "id": "tips_facility_0",
+    "text": "As the original and most-played map, Facility_0's grid-like grey corridors reward Survivors who memorize its twelve computer and twelve Freeze Pod locations well, since the layout's repetitive rooms can otherwise cause disorientation for newer players. Beasts benefit from patrolling the central hallways that connect most of the map's rooms rather than committing to a single wing early, since Facility_0's fairly open design punishes over-committing to one area."
+  },
+  {
+    "id": "tips_homestead",
+    "text": "Homestead's brown fog and mostly outdoor layout make visual tracking harder for the Beast, especially around the hedge maze, which Survivors can use to break sightlines. Because jumping causes a Beast slowdown, Survivors familiar with Homestead's obstacle-heavy terrain can exploit repeated fence and barrier jumps to bleed chase time, which is part of why the map carries a reputation for favoring Survivors who know its quirks."
+  },
+  {
+    "id": "tips_airport",
+    "text": "Airport's scale means the Beast cannot realistically patrol the entire map on foot within a single round, so prioritizing high-traffic zones like the boarding gates and VIP lounges tends to be more effective than wandering the long central corridors. Survivors benefit from splitting into small groups to work opposite ends of the terminal simultaneously, taking advantage of the map's two widely-separated exit gates."
+  },
+  {
+    "id": "tips_the_library",
+    "text": "Because The Library is voted for less often, many players never build strong map knowledge of it, which the community generally agrees makes it harder for both sides — Survivors struggle to locate computers efficiently, while Beasts struggle to predict Survivor movement through its maze-like room arrangement. Learning its layout ahead of time is disproportionately valuable compared to more commonly played maps."
+  },
+  {
+    "id": "tips_haunted_mansion",
+    "text": "Haunted Mansion's small overall footprint favors an aggressive Beast playstyle, since travel time between rooms is short and there's less space for Survivors to put real distance between themselves and a pursuing Beast. The distinctive humming sound near its computers can help attentive Survivors triangulate nearby activity, while its leaf piles offer situational hiding spots against a Beast using Seer."
+  },
+  {
+    "id": "tips_school",
+    "text": "School's blend of narrow, locker-lined hallways and large open rooms like the gymnasium rewards Survivors who understand which classrooms are dead ends and which connect through to other hallways, since ducking into the wrong room during a chase can trap a Survivor with no way out. Its relatively high number of hiding spots generally makes it one of the friendlier maps for Survivor teams."
+  },
+  {
+    "id": "tips_nuclear_power_plant_remake",
+    "text": "The security camera system in the monitor room is unique to this map and gives the Beast a significant intelligence advantage if used consistently throughout the round, letting them track Survivor movement without physically patrolling every room. Survivors aware of the camera system should be cautious about lingering visibly in open areas, and the power room's light-control buttons add an extra layer of environmental interaction not found on other maps."
+  },
+  {
+    "id": "tips_arcade",
+    "text": "Arcade's bright, neon lighting reduces the effectiveness of shadow-based hiding compared to darker maps, meaning Survivors generally rely more on breaking line of sight around its dense arrangement of arcade cabinets than on simply blending into darkness. Its visually busy layout can also make it harder for a Beast to visually spot a stationary Survivor at a glance."
+  },
+  {
+    "id": "tips_arctic_station",
+    "text": "Arctic Station's snow piles function similarly to Haunted Mansion's leaf piles as situational hiding spots, particularly useful against a Beast using Seer. Its cold, isolated research-outpost setting tends to feature more enclosed rooms than open maps like Airport, giving Survivors more opportunities to break sightlines during a chase."
+  },
+  {
+    "id": "tips_abandoned_prison_maximus",
+    "text": "The dense rows of cells and narrow corridors on Abandoned Prison Maximus create frequent close-quarters encounters, meaning Survivors caught in the wrong corridor often have little room to maneuver around a pursuing Beast. This tighter layout tends to favor Beasts who are comfortable with close combat timing over those relying on long-range interception."
+  },
+  {
+    "id": "tips_sanctuary_zoo",
+    "text": "Sanctuary Zoo's mix of open outdoor pathways between animal enclosures and enclosed indoor visitor buildings means Survivors need to judge, moment to moment, whether it's safer to cross open ground quickly or route through indoor structures for cover, similar in principle to the outdoor/indoor balance Homestead presents but with a completely different visual theme."
+  },
+  {
+    "id": "tips_spaceship",
+    "text": "Spaceship's tight, enclosed sci-fi corridors leave less room for wide chases than open maps like Airport, so Survivors generally rely more on doors and quick direction changes through connecting rooms than on outrunning the Beast in a straight line."
+  },
+  {
+    "id": "tips_ghost_town",
+    "text": "Ghost Town's hybrid layout of open streets and enclosed saloon or storefront interiors means Survivors can choose between the relative safety of indoor cover and the speed of crossing open ground, while Beasts need to watch both the street-level sightlines and the building interiors rather than focusing on just one or the other."
+  },
+  {
+    "id": "tips_shopping_center",
+    "text": "As one of the more actively played current maps, Shopping Center's mall-like layout of storefronts and open concourses gives Survivors multiple parallel routes between computers, while back-of-house employee areas can serve as less obvious hiding or hacking locations that a Beast patrolling the main concourse might check less frequently."
+  },
+  {
+    "id": "tips_abandoned_facility_optimus",
+    "text": "As the latest version of the game's recurring abandoned-facility concept, Optimus continues the grey industrial aesthetic established by Facility_0 while introducing its own room layout, meaning players familiar with older versions of the map family should still expect a distinct floor plan requiring fresh map-learning rather than assuming carryover knowledge."
+  },
+  {
+    "id": "tips_backrooms_event",
+    "text": "Because Backrooms intentionally lacks defined rooms or color-coded walls, Survivors and Beasts alike tend to rely far more heavily on sound cues than on visual landmarks, since the repetitive yellow-walled aesthetic makes visual navigation notoriously unreliable even for players who have played the event map in previous years."
+  },
+  {
+    "id": "tips_toy_workshop_event",
+    "text": "Toy Workshop's unusually bright lighting and sparse vent placement make it harder for a spotted Survivor to break a chase compared to darker, vent-heavy maps, so Survivors generally benefit from avoiding detection in the first place — using the conveyor belts and gift-filled rooms for cover — rather than counting on an escape route once the Beast has already spotted them."
+  },
+  {
+    "id": "mechanic_achievements",
+    "text": "Achievements are badge-like rewards granted for completing specific in-game challenges, and can reward players with gemstones, credits, or even hammers depending on the achievement. Examples referenced in community documentation include reaching Level 100, causing three players to leave a server after capturing them in a single round as the Beast, capturing three Survivors within roughly three minutes and forty-five seconds as the Beast, and opening every door on a map in a single round as a Survivor. Achievements add optional long-term goals on top of the standard per-round credit and XP loop."
+  },
+  {
+    "id": "mechanic_trading_post_detail",
+    "text": "The Trading Post allows players to exchange hammer and gemstone cosmetics directly with other players rather than relying solely on crate purchases to complete their collection. This gives players an alternative path to acquiring specific items they want, particularly useful for chasing rare or limited-time cosmetics that may no longer be obtainable through active crates once an associated event has ended."
+  },
+  {
+    "id": "mechanic_special_servers_detail",
+    "text": "Special Servers give players a way to play outside the standard public matchmaking pool, letting groups such as friends or members of a Discord community queue into the same round together rather than being randomly distributed across public servers. This is particularly useful for coordinated group play, content creation, or simply playing with a known group of friends without relying on chance public matchmaking."
+  },
+  {
+    "id": "mechanic_map_voting_detail",
+    "text": "The map voting system presents four maps at a time on physical voting plates within Camp Lapis during the 30-second intermission between rounds. Players indicate their preference by standing on the plate corresponding to their chosen map, and whichever map accumulates the most standing votes by the end of the intermission is loaded next. VIP players have their vote counted twice, giving them proportionally more influence over which map gets selected compared to non-VIP players."
+  },
+  {
+    "id": "mechanic_beast_cave_detail",
+    "text": "The Beast Cave is a small, isolated holding area separate from the main map where the Beast spends the 15-second Survivor head start at the beginning of every round. It exists specifically to prevent the Beast from having any early information or map presence before Survivors get a fair chance to scatter and begin searching for computers, and it's also where the Beast makes their Beast Power selection for that round."
+  },
+  {
+    "id": "mechanic_camp_lapis_detail",
+    "text": "Camp Lapis is the game's central lobby area, where all players gather between rounds. It hosts the map voting plates, functions as the return point for Survivors who escape or are eliminated, and serves as the general social space where players can chat and prepare before the next round's roles are assigned."
+  },
+  {
+    "id": "mechanic_ragdoll_detail",
+    "text": "When the Beast successfully lands a hammer hit on a Survivor, the Survivor enters a ragdoll state, becoming temporarily incapacitated and vulnerable to being roped and carried to a Freeze Pod. A known quirk of this ragdoll physics system occasionally causes a hit Survivor to \"flop\" an unusually large distance, an unintended side effect of the physics engine rather than a designed mechanic, though it has at times been adjusted by the developers, including a documented increase to ragdoll flop power in one past update."
+  },
+  {
+    "id": "history_genre_context",
+    "text": "Flee the Facility is frequently described by both players and outside coverage as belonging to the same broad asymmetrical-horror genre popularized on PC by Dead by Daylight, adapted to Roblox's lower-fidelity, blockier presentation and its free-to-play, cosmetic-monetized economy. Compared to more intensely horror-themed Roblox experiences, Flee the Facility is generally considered to have a comparatively lighter horror tone, prioritizing chase-based tension and social, party-style play over overt scares."
+  },
+  {
+    "id": "history_round_length_criticism",
+    "text": "One of the most consistently repeated player criticisms of Flee the Facility concerns round length, which can stretch up to roughly 15 minutes in the most extreme cases, particularly when a skilled Survivor team successfully evades a Beast for a long period without being fully wiped out or fully escaping. This has led to ongoing community discussion, though the developers have not implemented a hard structural change to round-length pacing, relying instead on natural round-ending conditions like full escapes, full freezes, or the timer expiring."
+  },
+  {
+    "id": "history_balance_criticism",
+    "text": "Alongside round-length complaints, players have periodically raised concerns about balance between the Beast and Survivors varying noticeably from map to map, with some maps considered comparatively easier for Survivors due to abundant hiding spots and escape routes, and others considered to favor an aggressive Beast due to smaller size or tighter corridors. The developers have addressed specific instances of this through targeted rebalancing updates to individual maps, such as Facility_0's 3rd Anniversary changes, rather than a single sweeping balance pass across the entire map pool at once."
+  },
+  {
+    "id": "history_map_pool_growth_summary",
+    "text": "Taken as a whole, Flee the Facility's map pool has grown from a single map at launch in 2017 to 15 current permanent maps plus two recurring limited-time event maps as of 2026, with roughly 9 additional maps having been removed, replaced, or remade over the game's lifespan. This steady turnover reflects an ongoing pattern of the developers refreshing older map designs — frequently by fully remaking a map under a similar name — rather than simply leaving early, less-refined maps untouched indefinitely."
+  },
+  {
+    "id": "faq_head_start_length",
+    "text": "The Survivor head start at the beginning of every round lasts exactly 15 seconds, during which the Beast is held in the Beast Cave and cannot affect the map in any way. This window is consistent across every map and every lobby size, giving Survivors a predictable, fixed amount of time to scatter and begin locating computers before the Beast is released."
+  },
+  {
+    "id": "faq_round_timer_length",
+    "text": "A full round of Flee the Facility is capped at roughly 15 minutes, though the large majority of rounds end well before hitting that limit, either because the Survivor team fully escapes, the Beast fully freezes every Survivor, or some mix of both occurs before time expires. If the timer does run out with Survivors still active and un-frozen, any Survivor who hasn't been captured or frozen is credited as though they had escaped."
+  },
+  {
+    "id": "faq_can_beast_open_exit",
+    "text": "The Beast is physically able to walk through an unlocked Exit Door, but doing so has no effect for them — Exit Doors only function as a win condition for Survivors. The Beast's only path to victory is capturing and fully freezing every Survivor before the round timer expires."
+  },
+  {
+    "id": "faq_extra_computer_purpose",
+    "text": "Every map spawns exactly one more computer than the number strictly required to unlock the exit doors. This design choice exists specifically to prevent the Beast from memorizing and guarding every single required computer location and guaranteeing a capture through simple denial, since Survivors always have at least one additional, non-essential computer they could choose to hack instead if a particular area feels too dangerous."
+  },
+  {
+    "id": "faq_vip_effects_timing",
+    "text": "Players who purchase the VIP gamepass are advised to rejoin the game server after purchasing in order for VIP's passive effects — such as increased XP and credit gains, doubled map vote weight, and the VIP cosmetic items — to actually take effect during their next round, rather than assuming the benefits apply instantly mid-session."
+  },
+  {
+    "id": "glossary_beast",
+    "text": "Beast: the single hunter role each round, tasked with capturing and freezing every Survivor before the round timer expires or all Survivors escape."
+  },
+  {
+    "id": "glossary_survivor",
+    "text": "Survivor: any player not selected as the Beast in a given round, tasked with hacking computers and escaping through an unlocked exit door."
+  },
+  {
+    "id": "glossary_camp_lapis",
+    "text": "Camp Lapis: the game's central lobby hub where players gather between rounds, vote on the next map, and return to after escaping or being frozen."
+  },
+  {
+    "id": "glossary_beast_cave",
+    "text": "Beast Cave: the isolated holding room where the Beast waits during the Survivor head start and selects a Beast Power before being released into the map."
+  },
+  {
+    "id": "glossary_freeze_pod",
+    "text": "Freeze Pod: a machine the Beast uses to imprison a captured Survivor, whose health drains over time until they are fully frozen and eliminated from the round."
+  },
+  {
+    "id": "glossary_exit_door",
+    "text": "Exit Door: a locked door on every map that opens once the required number of computers has been hacked, allowing Survivors to escape and win."
+  },
+  {
+    "id": "glossary_skill_check",
+    "text": "Skill Check: a timing-based prompt that appears while hacking a computer; failing it triggers a loud alarm that reveals the computer's location to the Beast."
+  },
+  {
+    "id": "glossary_ragdoll",
+    "text": "Ragdoll: the incapacitated physics state a Survivor enters after being hit by the Beast's hammer, leaving them vulnerable to being roped and captured."
+  },
+  {
+    "id": "glossary_head_start",
+    "text": "Head Start: the 15-second window at the beginning of every round during which Survivors can move freely while the Beast remains confined to the Beast Cave."
+  },
+  {
+    "id": "glossary_beast_power",
+    "text": "Beast Power: a round-long ability chosen by the Beast during the head start; Runner, Stalker, and Seer are currently selectable, with Hacker existing but unreleased."
+  },
+  {
+    "id": "glossary_credits",
+    "text": "Credits: the primary in-game currency, earned through round objectives and spent on cosmetic hammers and gemstones through crates."
+  },
+  {
+    "id": "glossary_crate",
+    "text": "Crate: a purchasable container of cosmetic items, split into H Crates for hammers and G Crates for gemstones, with fixed per-item prices by rarity."
+  },
+  {
+    "id": "glossary_vent",
+    "text": "Vent: a narrow crawlspace found throughout every map that only Survivors can use to move between rooms, inaccessible to the Beast."
+  },
+  {
+    "id": "glossary_vip",
+    "text": "VIP: a purchasable gamepass granting passive bonuses including extra XP, extra credits, doubled map vote weight, and exclusive cosmetic items."
+  },
+  {
+    "id": "glossary_trading_post",
+    "text": "Trading Post: an in-game system allowing players to exchange owned hammer and gemstone cosmetics with one another outside of crate purchases."
+  },
+  {
+    "id": "beginner_first_round_expectations",
+    "text": "For a brand-new player, the most important thing to understand before a first round is that Survivor play is fundamentally about avoiding unnecessary risk rather than rushing toward objectives as fast as possible. New players often make the mistake of sprinting directly toward the nearest visible computer without first listening for nearby danger, which is one of the most common ways first-time Survivors get caught early in a round before they've even had a chance to contribute meaningfully."
+  },
+  {
+    "id": "beginner_learning_maps_first",
+    "text": "Because map knowledge affects both roles so heavily, a practical early goal for new players is simply to play enough rounds on a handful of commonly voted maps — such as Facility_0, Airport, and School — to build a rough mental map of typical computer, Freeze Pod, and exit door locations, rather than trying to memorize all 15 current maps at once. Familiarity with a smaller pool of frequently played maps pays off faster than spreading attention too thin."
+  },
+  {
+    "id": "beginner_first_time_as_beast",
+    "text": "Playing the Beast for the first time can feel disorienting due to the first-person perspective and the pressure of tracking multiple Survivors at once. New Beast players are generally better served focusing on isolating and chasing a single visible Survivor rather than trying to react to sound cues from every direction simultaneously, since splitting attention too widely as a new player often results in catching no one at all."
+  },
+  {
+    "id": "beginner_common_survivor_mistakes",
+    "text": "Beyond rushing toward computers carelessly, other frequent beginner Survivor mistakes include leaving doors open while fleeing, which reveals their path to the Beast; attempting a solo rescue against a Beast that is clearly still nearby; and failing Skill Checks repeatedly by hacking under pressure without first confirming the area feels safe. Each of these mistakes tends to convert a single capture into a cascading loss of multiple Survivors in the same round."
+  },
+  {
+    "id": "beginner_common_beast_mistakes",
+    "text": "New Beast players commonly over-commit to chasing a single fleeing Survivor for too long, abandoning map awareness of where other Survivors and unguarded computers are located. Another frequent mistake is camping too closely to a captured Survivor's Freeze Pod, which — due to the distance requirement for health drain — can actually prevent the capture from ever completing, unintentionally giving the Survivor's team more time to attempt a rescue."
+  },
+  {
+    "id": "beginner_credits_spending_advice",
+    "text": "New players accumulating their first credits often face a choice between saving up for a single higher-rarity crate pull or spending smaller amounts more frequently on Common and Rare items. Since all cosmetics are purely visual with no gameplay impact, this is entirely a matter of personal preference rather than a strategic decision that affects in-round performance, and either approach is equally valid depending on whether a player values consistent, cheaper cosmetic variety or occasional higher-rarity pulls."
+  },
+  {
+    "id": "comparison_beast_powers_summary",
+    "text": "Comparing the three currently selectable Beast Powers: Runner is the most straightforward, favoring aggressive, speed-driven play and suiting newer Beast players or open maps like Airport; Stalker is a stealth-oriented pick that rewards patient, sound-and-sight-denial play, particularly effective on darker maps and when paired with a dark, uniform avatar color; and Seer is an information-focused pick that gives the Beast a wider sense of Survivor positioning at the cost of the direct speed or stealth benefits the other two powers offer."
+  },
+  {
+    "id": "comparison_map_difficulty_survivor_friendly",
+    "text": "Among current maps, School and Airport are generally regarded by the community as comparatively Survivor-friendly, owing to their relatively high number of hiding spots and, in Airport's case, two widely separated exits that make a full team wipe more difficult for the Beast to achieve. These maps tend to reward coordinated team play over individual stealth."
+  },
+  {
+    "id": "comparison_map_difficulty_beast_friendly",
+    "text": "Conversely, Haunted Mansion's smaller footprint and Abandoned Prison Maximus's tight, cell-lined corridors are generally considered to favor an aggressive Beast, since both maps compress the distance between rooms and reduce the space Survivors have to build a meaningful lead during a chase, compared to sprawling maps like Airport."
+  },
+  {
+    "id": "comparison_map_difficulty_hardest_to_learn",
+    "text": "The Library stands out in community discussion as the map with the steepest learning curve for both roles, due to its confusing, maze-like layout and inconsistent computer placement — sometimes tightly clustered, sometimes spread unusually far apart — combined with the fact that it's voted for less often, which limits how much natural exposure most players get to it compared to more frequently played maps."
+  },
+  {
+    "id": "flavor_asymmetry_design_intent",
+    "text": "Flee the Facility's core design intentionally leans into asymmetry as its central tension: one player commands raw power and a first-person hunting perspective, while up to four players must rely on cooperation, environmental knowledge, and a handful of specific movement tools to offset that imbalance. This mirrors the broader asymmetrical-horror genre's appeal — the Beast experience is about controlled dominance and hunting instinct, while the Survivor experience is about tension, teamwork, and narrow escapes."
+  },
+  {
+    "id": "flavor_social_lobby_role",
+    "text": "Camp Lapis functions as more than a simple menu screen between rounds — it's also the game's informal social space, where players chat, show off cosmetics, and coordinate before the next round's roles are randomly assigned. Because roles reset every round, there's no persistent team structure carried between matches, meaning any given lobby of players might cycle through being teammates, then facing off against a friend who becomes the Beast, round after round."
+  },
+  {
+    "id": "flavor_map_theme_variety",
+    "text": "Across its 15 current maps plus event maps, Flee the Facility spans a wide range of settings — industrial facilities, a rural homestead, an airport terminal, a haunted mansion, a school, a nuclear plant, an arcade, an arctic research station, a prison, a zoo, a spaceship, a ghost town, a shopping center, and seasonal settings like a toy workshop and the internet's Backrooms concept — giving the game considerably more visual and thematic variety than its original single grey facility map suggested at launch."
+  },
+  {
+    "id": "flavor_community_created_maps_significance",
+    "text": "The fact that multiple currently active maps — including School and Nuclear Power Plant — originated as community submissions through A.W. Apps' official submissions server reflects a development approach that actively incorporates player-made content into the official game, rather than keeping map design entirely in-house. This has allowed the map pool to grow at a pace and with a degree of creative variety that a small internal team alone might not have sustained across the game's multi-year lifespan."
+  },
+  {
+    "id": "achievement_fleeing_the_facility",
+    "text": "The achievement nicknamed \"Fleeing The Facility,\" subtitled \"It's Harder than you think it is,\" is earned by reaching Level 100. Because leveling requires a flat 4,000 XP per level once past Level 10, this achievement represents a genuinely long-term goal reached only through sustained, repeated play across many rounds rather than something achievable in a single session."
+  },
+  {
+    "id": "achievement_just_too_good",
+    "text": "\"Just Too Good,\" subtitled \"A little bit too... good?,\" is earned by causing three players to leave the server after successfully capturing them within a single round while playing as the Beast. This ties the achievement to particularly dominant Beast performances rather than simply winning a round, since it specifically tracks players who disconnect after being captured."
+  },
+  {
+    "id": "achievement_gotta_go_fast",
+    "text": "\"Gotta go Fast!,\" subtitled \"Quickest Hedgehog Around,\" is earned by successfully capturing three Survivors within roughly 225 seconds, or three minutes and forty-five seconds, in a single round as the Beast. It rewards fast, efficient Beast play rather than simply eventually catching everyone regardless of how long the round takes."
+  },
+  {
+    "id": "achievement_locksmith_larry",
+    "text": "\"Locksmith Larry,\" subtitled \"Wanna know what's behind every door,\" is earned by opening every door on a given map while playing as a Survivor in a single round, encouraging thorough exploration of a map's layout rather than only interacting with the doors directly along a player's chosen route."
+  },
+  {
+    "id": "walkthrough_intermission_phase",
+    "text": "A full round of Flee the Facility begins in Camp Lapis, where players spend a 30-second intermission socializing and voting on the next map by standing on one of four voting plates. VIP players' votes count twice toward the total. Once the intermission ends and a map is chosen — following the tie-breaking and no-vote rules described elsewhere — the game randomly assigns one player as the Beast and the rest as Survivors, and everyone is teleported into the round."
+  },
+  {
+    "id": "walkthrough_headstart_phase",
+    "text": "As the round proper begins, Survivors spawn directly into the chosen map and gain a 15-second head start to move freely and begin locating computers, while the Beast is held in the separate Beast Cave, choosing a Beast Power from whichever options — Runner, Stalker, or Seer — are currently available. If the Beast fails to choose within the window, Runner is assigned automatically by default."
+  },
+  {
+    "id": "walkthrough_midround_phase",
+    "text": "Once the head start ends, the Beast is released into the map and the central chase dynamic begins: Survivors split up to hack computers while avoiding detection, using doors, vents, windows, and hiding spots to manage risk, while the Beast searches, listens for sound cues, and attempts to intercept and hit Survivors with the hammer to begin the capture process. This phase continues, with computers being hacked and Survivors potentially being captured and rescued, until either the exit doors unlock or the Beast makes significant progress toward freezing the team."
+  },
+  {
+    "id": "walkthrough_endgame_phase",
+    "text": "Once enough computers are hacked, the exit doors unlock with a distinct audio cue and on-screen icons, shifting the round into its endgame phase: Survivors race toward the exits while the Beast frequently pivots toward guarding those same exit areas, weighing whether to keep hunting scattered Survivors or camp the most likely escape points. The round ends once every Survivor has either escaped, been fully frozen, or the round timer expires, after which all players return to Camp Lapis and receive their earned credits and XP."
+  },
+  {
+    "id": "faq_what_happens_if_beast_disconnects",
+    "text": "If the Beast disconnects from the server mid-round, any Survivor who has not yet escaped, been captured, or been frozen is credited as though they had successfully escaped, receiving the associated credit and XP reward. This prevents a round from being left in an unresolved state simply because the player controlling the Beast left the game early."
+  },
+  {
+    "id": "faq_what_happens_if_survivor_disconnects",
+    "text": "If a Survivor disconnects while already ragdolled or already placed inside a Freeze Pod, the Beast still receives full credit for freezing that Survivor, as though the capture had been completed normally. This prevents Survivors from being able to deny the Beast a reward simply by leaving the game once capture is effectively already underway."
+  },
+  {
+    "id": "faq_do_hammers_affect_hit_range",
+    "text": "Because all hammers in Flee the Facility are purely cosmetic skins layered over the same underlying weapon mechanics, differences in a hammer's visual model or rarity do not translate into any difference in hit range, swing speed, or damage. Every hammer functions identically to every other hammer in terms of actual gameplay effect."
+  },
+  {
+    "id": "faq_does_gemstone_affect_gameplay",
+    "text": "Like hammers, gemstones are purely cosmetic back accessories with no functional gameplay effect. A Survivor or Beast wearing a Legendary-rarity gemstone gains no mechanical advantage over one wearing a Common gemstone; the only difference is visual rarity and how difficult the item was to obtain from a crate."
+  },
+  {
+    "id": "faq_can_you_choose_your_role",
+    "text": "Roles are assigned randomly at the start of each round rather than being something a player can directly choose. The closest a player can get to influencing the outcome is the Main Menu's option to slightly adjust their personal odds of being selected as the Beast for the next round, in exchange for a small amount of Robux, though this only shifts probability rather than guaranteeing a specific role."
+  },
+  {
+    "id": "strategy_survivor_windows_vs_doors",
+    "text": "When deciding between using a window or a door to break away from a pursuing Beast, Survivors should account for the Beast's post-jump slowdown: cutting through a window forces the Beast to jump and briefly lose speed afterward, whereas a door interaction carries no such penalty for the Beast but can be closed behind the Survivor to slow pursuit instead. Combining both — using a window immediately followed by closing a nearby door — can compound the time advantage gained during a chase."
+  },
+  {
+    "id": "strategy_survivor_sound_discipline",
+    "text": "Because computer hacking produces audible cues and failed Skill Checks trigger a server-wide alarm, Survivors benefit from a degree of sound discipline: avoiding unnecessary risky hacks when a Beast's footsteps or hammer swings can be heard nearby, and timing hacking attempts for moments when the immediate area feels quiet rather than hacking reflexively the instant a computer is found."
+  },
+  {
+    "id": "strategy_beast_heartbeat_awareness",
+    "text": "Since Survivors can hear an audio heartbeat cue that increases as the Beast draws near, a Beast aware of this mechanic can use unpredictable movement — pausing, backtracking, or approaching from an unexpected angle — to make the heartbeat's directional information less useful to a listening Survivor, rather than approaching in a straight, predictable line that telegraphs their position clearly."
+  },
+  {
+    "id": "strategy_survivor_team_communication",
+    "text": "Because Survivors share progress toward the computer-hacking requirement collectively, teams that communicate — whether through in-game chat or an external voice channel — about which computers have already been hacked and where the Beast was last seen generally coordinate far more efficiently than teams of Survivors acting independently without any shared information."
+  },
+  {
+    "id": "strategy_beast_vs_grouped_survivors",
+    "text": "When multiple Survivors are working the same computer simultaneously, a Beast who manages to approach undetected has an opportunity to potentially catch more than one Survivor in quick succession, since a successful hit on one often causes nearby teammates to scatter in a panic rather than immediately regrouping, which the Beast can then exploit by picking off stragglers individually."
+  },
+  {
+    "id": "community_x_announcements",
+    "text": "A.W. Apps has historically used the account handle @A_W_Apps on X, formerly known as Twitter, to post official announcements regarding new updates, seasonal events, and map additions, making it a primary channel for players wanting advance notice of upcoming content changes to Flee the Facility."
+  },
+  {
+    "id": "community_no_third_party_codes",
+    "text": "Because Flee the Facility does not have any built-in promotional code redemption system, community guides consistently warn players against trusting third-party websites that claim to offer working codes for free credits, cosmetics, or other rewards, since no such legitimate system exists within the game itself as of the current build."
+  },
+  {
+    "id": "community_veteran_vs_newcomer_gap",
+    "text": "Given the game's multi-year history and steadily expanded map pool, there is a noticeable knowledge gap between veteran players who have accumulated deep map and mechanic familiarity over years of play, and newer players still learning basic layouts and Skill Check timing. This gap is part of why structured beginner guidance — learning a small set of maps first, understanding the credit and rescue systems, and practicing Skill Checks — tends to accelerate a new player's improvement significantly."
+  },
+  {
+    "id": "mechanic_computer_visual_states",
+    "text": "Computers visually communicate their current state to nearby players: an inactive or untouched computer typically appears with a resting glow, an actively hacked computer glows more prominently while a Survivor works on it, and a computer that has just failed a Skill Check turns visibly red and plays a loud failure sound audible across the server, clearly signaling that location as compromised to any Beast listening nearby."
+  },
+  {
+    "id": "mechanic_typing_animation",
+    "text": "When a Survivor begins hacking, their character plays a typing animation at the keyboard, visually distinguishing an actively-hacking Survivor from one who is simply standing near a computer. This animation, combined with the progress bar and periodic Skill Checks, forms the complete hacking interaction loop that repeats at every computer a Survivor chooses to work on throughout a round."
+  },
+  {
+    "id": "mechanic_rope_capture_detail",
+    "text": "To begin transporting a ragdolled Survivor toward a Freeze Pod, the Beast must first attach a rope by double-clicking directly on the downed Survivor. Only after the rope is attached can the Beast drag the Survivor toward a nearby pod and, once close enough, interact with the pod to lock them inside, beginning the health-drain sequence that ultimately results in a full freeze if left uninterrupted."
+  },
+  {
+    "id": "mechanic_credits_and_robux_purchases",
+    "text": "Beyond earning credits through normal round play, players can also purchase additional credits directly using Robux through the Main Menu, offering a faster path to specific crates or cosmetics for players willing to spend real-world-linked currency rather than relying solely on the gradual, round-by-round credit accumulation earned through objectives like hacking, rescuing, and escaping."
+  },
+  {
+    "id": "power_rec_facility_0",
+    "text": "On Facility_0's fairly open, repetitive grey layout, Runner tends to suit aggressive Beasts who want to close distance quickly across its connected hallways, while Stalker can help offset the map's lack of natural shadow given its uniform lighting."
+  },
+  {
+    "id": "power_rec_homestead",
+    "text": "Homestead's brown fog and outdoor hedge maze make Stalker a strong pick, since reduced heartbeat range and glow compound the map's already-limited visibility, while Runner risks being undercut by the map's jump-punishing terrain if Survivors bait the Beast into obstacle-heavy chases."
+  },
+  {
+    "id": "power_rec_airport",
+    "text": "Given Airport's large scale and two widely separated exits, Runner is commonly favored so the Beast can realistically cover the distance needed to threaten both exit areas within a single round."
+  },
+  {
+    "id": "power_rec_the_library",
+    "text": "The Library's maze-like, inconsistent layout makes Seer valuable for Beasts who don't yet have strong map knowledge, since it compensates for the difficulty of predicting Survivor movement through its confusing room arrangement."
+  },
+  {
+    "id": "power_rec_haunted_mansion",
+    "text": "Haunted Mansion's small footprint and multiple floors make Runner effective for quickly closing gaps within its compact interior, while its leaf piles make Seer useful for countering Survivors who lean on hiding spots."
+  },
+  {
+    "id": "power_rec_school",
+    "text": "School's mix of narrow hallways and open rooms like the gymnasium suits Runner well for chasing through corridors, though Seer can help offset the map's relatively high number of hiding spots."
+  },
+  {
+    "id": "power_rec_nuclear_power_plant_remake",
+    "text": "Because this map's camera system already provides passive information, Beasts on Nuclear Power Plant often lean toward Runner or Stalker rather than Seer, since the map's built-in intel tools can reduce the marginal value of an information-focused power."
+  },
+  {
+    "id": "power_rec_arcade",
+    "text": "Arcade's bright, visually busy neon environment reduces the value of Stalker's glow reduction, making Runner or Seer generally more impactful picks on this particular map."
+  },
+  {
+    "id": "power_rec_arctic_station",
+    "text": "Arctic Station's snow-pile hiding spots and isolated outpost setting make Seer a strong counter-pick against Survivors leaning heavily on concealment in the map's colder, more enclosed rooms."
+  },
+  {
+    "id": "power_rec_abandoned_prison_maximus",
+    "text": "The tight cell-lined corridors of Abandoned Prison Maximus favor Runner, since the map's close-quarters design already limits how far Survivors can run before being cornered."
+  },
+  {
+    "id": "power_rec_sanctuary_zoo",
+    "text": "Sanctuary Zoo's mix of open outdoor paths and enclosed visitor buildings makes Seer useful for tracking Survivors as they move between the two environment types."
+  },
+  {
+    "id": "power_rec_spaceship",
+    "text": "Spaceship's tight, enclosed corridors suit Runner well, since the map's compact layout rewards a Beast who can close distance quickly rather than one relying on stealth."
+  },
+  {
+    "id": "power_rec_ghost_town",
+    "text": "Ghost Town's hybrid open-street and enclosed-building layout makes Seer valuable for tracking Survivors who alternate between the two, similar in principle to Sanctuary Zoo."
+  },
+  {
+    "id": "power_rec_shopping_center",
+    "text": "Shopping Center's dense storefront layout with back-of-house areas makes Seer useful for locating Survivors using the mall's less obvious side rooms."
+  },
+  {
+    "id": "power_rec_abandoned_facility_optimus",
+    "text": "As with earlier versions of this map family, Abandoned Facility Optimus's industrial layout generally suits Runner for Beasts comfortable closing distance through its connected rooms."
+  },
+  {
+    "id": "glossary_hammer",
+    "text": "Hammer: the Beast's melee weapon each round, purely cosmetic in variety, used to hit and ragdoll Survivors so they can be roped and captured."
+  },
+  {
+    "id": "glossary_gemstone",
+    "text": "Gemstone: a cosmetic back accessory worn by both Survivors and the Beast, visible as a glowing chest piece on the Beast specifically, with no gameplay effect."
+  },
+  {
+    "id": "glossary_h_crate",
+    "text": "H Crate: a crate type that exclusively contains hammer cosmetics, purchasable with credits at fixed per-item prices based on rarity."
+  },
+  {
+    "id": "glossary_g_crate",
+    "text": "G Crate: a crate type that exclusively contains gemstone cosmetics, purchasable with credits at fixed per-item prices based on rarity."
+  },
+  {
+    "id": "glossary_double_jump",
+    "text": "Double Jump: a Survivor-exclusive movement mechanic, usable once every three seconds, added to the game on September 7th, 2023."
+  },
+  {
+    "id": "glossary_crawling",
+    "text": "Crawling: the act of a Survivor entering and moving through a Vent, a maneuver unavailable to the Beast."
+  },
+  {
+    "id": "glossary_camp_a_w_apps",
+    "text": "A.W. Apps: the Roblox developer group, led by Andrew \"MrWindy\" Willeitner, that created and continues to develop Flee the Facility."
+  },
+  {
+    "id": "glossary_beast_perk",
+    "text": "Beast Perk: an alternate, commonly used community term for Beast Power, referring to the round-long ability the Beast selects during the head start."
+  },
+  {
+    "id": "glossary_camping",
+    "text": "Camping: community slang describing a Beast lingering too close to a captured Survivor's Freeze Pod, which prevents the health-drain freeze process from progressing."
+  },
+  {
+    "id": "glossary_lingering",
+    "text": "Lingering: an alternate community term for camping a Freeze Pod, referring specifically to the Beast staying within the distance that halts health drain."
+  },
+  {
+    "id": "edge_case_last_survivor_standing",
+    "text": "When only one Survivor remains active and un-frozen while teammates have already been frozen or have escaped, that final Survivor must complete any remaining objectives — whether that's finishing the computer requirement or simply reaching an already-unlocked exit — entirely alone, without any possibility of being rescued if captured, since no other Survivor remains available to perform a rescue."
+  },
+  {
+    "id": "edge_case_all_computers_hacked_early",
+    "text": "Because every map spawns one more computer than strictly required, a coordinated Survivor team can occasionally end up hacking every available computer on a map, including the non-essential extra one, well before the round would naturally end. Doing so grants the bonus XP and credits tied to that extra computer but has no additional effect on the exit doors, which unlock the moment the base requirement is met regardless of whether the bonus computer is ever touched."
+  },
+  {
+    "id": "edge_case_survivor_reward_on_timeout",
+    "text": "If the round timer expires while some Survivors remain neither escaped, captured, nor frozen, those still-active Survivors are automatically credited with the same reward as if they had escaped through an exit door, ensuring that simply running out the clock successfully still counts as a meaningful outcome for Survivors who avoided capture."
+  },
+  {
+    "id": "edge_case_beast_no_hammer_bug",
+    "text": "Community bug reports have occasionally documented rare instances where the Beast spawns into a round without its hammer model visually attached, a known but infrequent glitch rather than an intended mechanic. This does not appear to prevent the Beast from actually hitting Survivors, but it does affect the visual presentation of the round when it occurs."
+  },
+  {
+    "id": "edge_case_beast_full_sweep_reward",
+    "text": "A Beast who freezes every Survivor in a round with four Survivors present earns the maximum possible per-round reward under the current system introduced in the 2024 Christmas Update: 800 XP and 100 credits total, calculated as 200 XP and 25 credits for each of the four Survivors frozen."
+  },
+  {
+    "id": "history_platform_recognition",
+    "text": "A.W. Apps holds verified, notable-community status with Roblox Corporation, a recognition tied to the studio's track record of developing and maintaining experiences on the platform, of which Flee the Facility is the most prominent, alongside other titles such as Project: Lazer0."
+  },
+  {
+    "id": "history_long_term_content_cadence",
+    "text": "Across its multi-year run, Flee the Facility has maintained a fairly consistent cadence of seasonal content: recurring anniversary updates tied to its July launch date, holiday events spaced throughout the calendar year such as Valentine's, Halloween, and Christmas, and periodic new map additions sourced from both the internal team and community submissions, rather than long content droughts between updates."
+  },
+  {
+    "id": "essay_beast_power_selection_strategy",
+    "text": "Choosing a Beast Power is arguably the single most consequential decision the Beast makes each round, since it shapes the entire playstyle available for the next several minutes. Runner rewards Beasts who are confident in their positioning and want to punish any Survivor caught in the open, particularly on larger, more open maps like Airport or Spaceship where raw speed compounds with shorter travel distances between key locations. Stalker instead rewards patience: by shrinking the heartbeat radius and dimming the Beast's glow, it denies Survivors the two most common early-warning signals they rely on, making it especially strong on darker, fog-heavy maps like Homestead or Haunted Mansion where visual tracking is already difficult for Survivors. Seer takes a different approach entirely, trading direct combat or stealth benefits for map-wide awareness, which pays off most clearly on mazelike or visually confusing maps such as The Library, where simply knowing roughly where Survivors are clustered can compensate for a Beast's incomplete knowledge of the map's exact layout. Because the currently unreleased Hacker power isn't selectable, most seasoned Beast players settle into a personal preference among these three, often adjusting their choice map-by-map rather than defaulting to the same power every round regardless of context."
+  },
+  {
+    "id": "essay_survivor_teamwork_dynamics",
+    "text": "While an individual Survivor can technically play an entire round in isolation, the credit and rescue systems are explicitly designed to reward cooperation. Because computers require Survivors to be present at the exact moment of completion to earn credit, and because rescuing a downed teammate only pays out once per Survivor per round, the system nudges players toward spreading out to cover more computers collectively while still staying close enough to respond if a nearby teammate gets captured. Effective Survivor teams tend to develop informal roles on the fly: some players naturally gravitate toward scouting ahead and calling out the Beast's position, others focus on methodically clearing computers, and others hang back specifically to respond to captures. None of these roles are enforced by the game itself — Flee the Facility doesn't assign Survivor sub-roles — but the incentive structure around credits, rescues, and shared computer progress consistently produces this kind of emergent specialization in coordinated groups, especially in private or VIP servers where the same group of friends plays together round after round and can build genuine, repeatable teamwork over time."
+  },
+  {
+    "id": "essay_monetization_overview",
+    "text": "Flee the Facility's monetization is built almost entirely around cosmetics rather than gameplay-altering purchases. Players earn credits through normal round play and spend them on H Crates and G Crates containing hammer and gemstone skins, or they can bypass the grind by purchasing credits directly with Robux through the Main Menu. The VIP gamepass adds a recurring passive-benefit purchase option, offering increased XP and credit gains, doubled map-vote weight, and exclusive cosmetic items, while remaining entirely optional for actually playing and progressing through the game. Because hammers and gemstones carry zero mechanical effect, a player who never spends a single Robux faces no genuine competitive disadvantage against players who do, which distinguishes Flee the Facility's monetization model from games where purchased items affect win rates directly. The removal of the randomized crate-opening animation in October 2023, in favor of fixed, individually-priced items, further reinforced this cosmetics-first approach by eliminating the loot-box-style randomness that had previously determined exactly which item a given crate purchase would yield."
+  },
+  {
+    "id": "essay_map_pool_overview_table",
+    "text": "As of the current build, Flee the Facility's active map rotation includes fifteen permanent maps — Facility_0, Homestead, Airport, The Library, Abandoned Facility Optimus, Haunted Mansion, School, Nuclear Power Plant (Remake), Arcade, Arctic Station, Abandoned Prison Maximus, Sanctuary Zoo, Spaceship, Ghost Town, and Shopping Center — alongside two recurring limited-time event maps, Backrooms for Halloween and Toy Workshop for winter events. Five previously played maps have been fully removed from rotation over the years without direct successors carrying their exact names forward in the same way Abandoned Facility and Abandoned Prison were: Forgotten Facility, Laboratory Complex, and Sewer Treatment Plant, alongside the original, separately-named versions of Abandoned Facility and Abandoned Prison, which were eventually succeeded by their Remake and Maximus counterparts respectively. This steady churn — expanding the map pool while periodically retiring or remaking older entries — has been a consistent pattern throughout the game's history since its 2017 launch with only Facility_0 available."
+  },
+  {
+    "id": "essay_seasonal_event_cycle",
+    "text": "Flee the Facility follows a fairly predictable yearly rhythm of seasonal content tied to recognizable calendar holidays. Early in the year, a combined Valentine's Day and Lunar New Year event — branded in one instance as Valunar — brings exclusive hammer and gemstone bundles alongside a themed challenge. A Spring event follows later, historically bringing limited-time item bundles, map ambience changes, and UI improvements. Around October, Halloween Challenges bring back the Backrooms event map alongside Halloween-specific cosmetics, continuing a pattern established since Backrooms was first converted from a short-lived permanent map into a recurring seasonal attraction. Toward the end of the year, winter and Christmas content typically introduces the Toy Workshop event map alongside festive cosmetic bundles, and past Christmas updates have also been used to introduce broader gameplay-facing changes, such as the current Beast freeze-reward structure introduced in the 2024 Christmas Update. Layered on top of this yearly holiday cycle are anniversary updates tied to the game's July 1st, 2017 launch date, and occasional crossover events with other Roblox titles such as Arsenal and Dress to Impress, giving the community a fairly dense, ongoing calendar of live content beyond the core year-round map rotation."
+  },
+  {
+    "id": "essay_closing_summary",
+    "text": "Taken as a whole, Flee the Facility's enduring appeal comes from pairing a simple, easy-to-explain core loop — one hunter, several escapees, a countdown clock — with enough layered systems to reward long-term investment: a growing map pool shaped by both internal developers and community submissions, three distinct Beast Powers that meaningfully change how a round plays out, a purely cosmetic progression system that avoids pay-to-win concerns, and a steady cadence of seasonal events that keep the game feeling current years after its 2017 launch. For new players, the fastest path to competence is learning a handful of commonly played maps, understanding the credit and rescue incentive structure, and practicing Skill Check timing, while veteran players continue to debate finer points of Beast Power selection and map-specific strategy that have accumulated across the game's multi-year competitive history."
+  },
+  {
+    "id": "essay_new_player_roadmap",
+    "text": "A practical roadmap for a brand-new player might unfold across their first several sessions rather than trying to absorb every system at once. In the earliest rounds, the priority is simply understanding the basic loop — what a computer interaction looks and sounds like, how Skill Checks work, and what happens when a Freeze Pod captures a teammate — without worrying yet about optimal routing or Beast Power selection. Once that foundation feels natural, the next stage is building familiarity with a small handful of frequently voted maps, since map knowledge compounds in value the more a player recognizes common computer clusters, exit locations, and useful hiding spots on sight rather than needing to explore blindly. Only after both of those fundamentals feel solid does deeper strategic nuance — like reading Beast Power tendencies, timing rescues precisely, or specializing in scouting versus hacking within a coordinated team — start to meaningfully pay off, since none of those refinements matter much if a player is still struggling with basic Skill Check timing or getting lost on unfamiliar maps. This staged approach mirrors how most of the community's own strategy guides are structured, typically separating \"beginner tips\" from more advanced, map-specific or power-specific advice."
+  },
+  {
+    "id": "essay_asymmetric_balance_philosophy",
+    "text": "The tension at the heart of Flee the Facility's design comes from deliberately unequal tools: the Beast has no need to divide attention across multiple objectives and can focus entirely on hunting, while Survivors must balance progress on a shared objective against constant risk avoidance, coordinating as a group against a single, unpredictable threat. Several mechanics exist specifically to keep this asymmetry from tipping too far in either direction. The extra, non-essential computer on every map prevents the Beast from simply guarding a fixed, fully known set of locations. The Freeze Pod distance requirement prevents a Beast from trivially guaranteeing a freeze by camping a capture indefinitely. Double jump and vent crawling give Survivors tools the Beast structurally cannot use, offsetting the Beast's raw hunting advantage. And the escalating computer requirement scaling with player count ensures larger lobbies don't make the Beast's job proportionally easier or harder than smaller ones. None of these systems make the two roles symmetrical — they're not meant to be — but together they keep both sides feeling meaningfully skill-expressive rather than letting either role dominate purely through mechanical advantage alone."
+  },
+  {
+    "id": "essay_freeze_pod_deep_dive",
+    "text": "The Freeze Pod distance mechanic rewards closer examination because it directly shapes optimal Beast behavior after a capture. Once a Survivor is placed inside a pod, their health only begins draining once the Beast moves beyond a certain distance from that pod, visually indicated by the health bar switching from red to blue. This means a Beast who immediately stands guard next to a freshly captured Survivor is, counterintuitively, delaying that Survivor's elimination rather than securing it, since the health bar stays red and static under those conditions. The mechanic exists specifically to discourage pure camping as a winning strategy, pushing Beasts to instead patrol away from a capture and rely on distance, sound, and positioning to intercept any rescue attempt rather than parking directly next to the pod. For Survivors, this creates a genuine tactical window: because a captured teammate's health doesn't start draining until the Beast leaves, a Beast who lingers nearby out of caution is, in effect, giving the rescue team more time to organize a coordinated approach than a Beast who immediately moves on to hunt elsewhere."
+  },
+  {
+    "id": "essay_controls_accessibility",
+    "text": "Flee the Facility maintains functionally identical controls across PC, mobile, and console, mapping the same core actions — move, jump, interact, activate Beast Power, and open the map overlay — to whatever input method a given platform uses, whether that's keyboard and mouse, touchscreen buttons, or a controller. This consistency matters because the game's matchmaking mixes players across platforms within the same servers, meaning a PC player might be chased by a mobile player's Beast, or a console Survivor might be rescued by a PC teammate, all within the same round. Keeping the underlying interaction model identical regardless of platform — E to interact, Q to activate a Beast Power, M for the map — helps ensure no platform is meaningfully disadvantaged in terms of available actions, even though factors like screen size, input precision, and touch versus physical buttons can still affect an individual player's comfort with fast-paced Skill Checks or precise chase movement."
+  },
+  {
+    "id": "essay_trading_post_economy",
+    "text": "The Trading Post exists as a secondary way for players to acquire specific cosmetics beyond what crates alone provide, letting two players directly exchange owned hammers and gemstones with one another. This system becomes particularly relevant for limited-time event cosmetics, since once a seasonal event ends and its associated crates are no longer purchasable, trading remains one of the only ways a player who missed that window might still obtain a specific item from another player willing to part with it. Because all traded items are purely cosmetic, trades don't carry any competitive stakes in the way item trading might in a game with functional gear, but limited-time rarity still gives certain event-exclusive cosmetics social and collector value within the community independent of any gameplay impact."
+  },
+  {
+    "id": "essay_wiki_culture",
+    "text": "Flee the Facility's official Fandom wiki reflects an actively maintained, community-run documentation effort spanning well over a thousand pages covering mechanics, maps, history, and cosmetics. Because the game continues receiving updates years after launch, the wiki functions as a living reference that community editors continuously revise to reflect balance changes, new maps, and adjusted reward numbers, such as the Beast's freeze-reward update introduced in the 2024 Christmas Update. This kind of community-maintained documentation is common across long-running Roblox experiences, but Flee the Facility's wiki is particularly extensive given the game's multi-year history, its large map pool, and the layered cosmetic and progression systems that have accumulated since its original 2017 launch with just a single map."
+  },
+  {
+    "id": "essay_horror_genre_positioning",
+    "text": "Within Roblox's broader catalog of horror-adjacent experiences, Flee the Facility sits toward the lighter, more social end of the spectrum. Its tension comes primarily from the chase-and-hide gameplay loop and the pressure of a ticking clock, rather than from jump scares, graphic content, or a heavily atmospheric horror presentation. This makes it accessible to a wide age range typical of the Roblox platform while still delivering genuine suspense during close chases, freeze-pod rescue attempts, and the tense final moments of a round when only one or two computers remain unhacked with the Beast actively patrolling nearby. Its closest genre comparison, Dead by Daylight, leans into a notably darker tone and more explicit horror presentation, whereas Flee the Facility translates the same core hunter-versus-survivors structure into a more approachable, Roblox-appropriate package."
+  },
+  {
+    "id": "essay_extra_faq_batch",
+    "text": "Community FAQ threads recurrently address a handful of the same core questions: whether cosmetics affect gameplay (they don't), how many computers are required at a given lobby size (Survivor count, with one extra always spawned), whether there's a way to guarantee becoming the Beast (only a probability adjustment via Robux, never a guarantee), and whether the game has promotional codes (it currently does not). These recurring questions suggest that, despite the game's layered systems, the most common points of confusion for players tend to cluster around a small, predictable set of topics rather than being spread evenly across every mechanic the game offers."
+  },
+  {
+    "id": "essay_map_voting_meta",
+    "text": "The map voting system, with its 30-second intermission and four-option ballot, creates a recurring point of light social friction and strategy within the community: because VIP players' votes count twice, a lobby with several VIP players can meaningfully sway which map gets chosen even if non-VIP players are in the numerical majority. Popular, generally well-liked maps such as Facility_0, Airport, and Shopping Center tend to win votes far more often than less-loved maps like The Library or Homestead, which contributes directly to the skill gap between commonly played and rarely played maps, since players naturally accumulate far more repetitions — and therefore familiarity — on whichever maps the community consistently favors in voting."
+  },
+  {
+    "id": "essay_computer_requirement_scaling_rationale",
+    "text": "The formula tying required computers directly to Survivor count — matching the number of Survivors present, with one additional computer always spawned on top — reflects a deliberate design choice to keep round difficulty roughly consistent regardless of lobby size. Without this scaling, a full lobby of Survivors would have an easier time than a smaller group simply by having more people available to split up hacking duties across a fixed number of computers, while a small lobby would be disproportionately punished by a high, fixed requirement. By scaling the requirement to match Survivor count, each round maintains a comparable level of challenge whether it's a nearly-empty lobby with just a couple of Survivors or a full lobby with the maximum four."
+  },
+  {
+    "id": "essay_credit_xp_reward_symmetry",
+    "text": "Comparing the reward structures for Survivors and the Beast reveals a rough underlying symmetry: Survivors earn 6 credits and 50 XP for a completed computer hack, 20 credits and 100 XP for a first rescue, and 25 credits and 300 XP for escaping, while the Beast earns 25 credits and 200 XP per Survivor frozen. Escaping is Survivors' single most lucrative reward per action, mirroring how freezing is the Beast's core repeated reward source, and both roles ultimately need to complete their respective win condition — full escape for Survivors, full freeze for the Beast — to maximize the credits and XP earned in a given round, rather than being able to farm secondary objectives alone into an equally profitable outcome."
+  },
+  {
+    "id": "essay_beast_first_person_design_choice",
+    "text": "The decision to render the Beast in first-person, while Survivors typically play in a more traditional third-person view, is one of the more distinctive design choices separating Flee the Facility from some other asymmetrical horror titles. This perspective difference reinforces the psychological asymmetry between the two roles: Survivors can see their own character and a wider situational view of their immediate surroundings, while the Beast experiences the hunt through a narrower, more immersive lens that emphasizes the thrill of the chase at the cost of peripheral awareness, reinforcing why sound cues and map memorization matter so much to strong Beast play."
+  },
+  {
+    "id": "essay_removed_maps_pattern_summary",
+    "text": "Looking at the five fully removed maps together — Forgotten Facility, Laboratory Complex, Sewer Treatment Plant, the original Abandoned Facility, and the original Abandoned Prison — a pattern emerges: rather than simply deleting an underperforming or outdated map outright, A.W. Apps has repeatedly chosen to revisit and rebuild certain map concepts under similar names, as seen with Abandoned Facility eventually becoming Abandoned Facility Remake and then Abandoned Facility Optimus, and Abandoned Prison becoming Abandoned Prison Maximus. Maps without a direct named successor, like Forgotten Facility, Laboratory Complex, and Sewer Treatment Plant, appear to have been retired without an announced plan to revisit that specific theme, at least as of the current build, though the developers' history of eventually reworking other retired concepts suggests a future remake is never entirely off the table for any given removed map."
+  },
+  {
+    "id": "essay_conclusion_for_dataset",
+    "text": "This collection of notes is meant to give a chatbot grounded, wiki-sourced context for answering common questions about Flee the Facility's roles, mechanics, maps, history, and strategy. Because Flee the Facility continues to receive live updates, some specific numbers here — reward amounts, exact map counts, or which Beast Powers are currently selectable — should be treated as accurate as of the sources consulted rather than permanently fixed facts, and are worth periodically rechecking against the official Fandom wiki as the game continues to evolve."
+  },
+  {
+    "id": "essay_chase_mechanics_deep_dive",
+    "text": "A chase sequence in Flee the Facility typically unfolds through a fairly recognizable rhythm once the Beast spots a Survivor: the Beast closes distance while the Survivor looks for the nearest usable obstacle — a door to slam shut, a window to vault through, a vent to duck into, or a piece of furniture to hide behind — to either break line of sight entirely or force the Beast to lose time navigating around it. Because the Beast suffers a brief slowdown after jumping, Survivors who route a chase through multiple windows in succession can compound small time advantages that add up over a sustained chase, even though no single window vault provides a dramatic escape on its own. Double jump adds another layer to this same dynamic, letting a Survivor clear gaps, reach elevated platforms, or simply create just enough vertical separation to break the Beast's direct line of sight for a critical second or two. None of these individual tools guarantee an escape by themselves; instead, skilled Survivor play tends to come from chaining several of these small delays together — a closed door, then a window, then a nearby vent — until the Beast either loses the trail entirely or the Survivor reaches help from a nearby teammate."
+  },
+  {
+    "id": "essay_beast_information_gathering",
+    "text": "Because the Beast's first-person view provides a narrower field of awareness than Survivors typically enjoy, strong Beast play depends heavily on gathering information through means other than direct sight. The heartbeat audio cue that intensifies near Survivors, the distinct alarm sound of a failed Skill Check, the ambient noise of footsteps, and — on maps like Nuclear Power Plant — an actual in-map camera network, all serve as substitutes for the kind of wide situational awareness Survivors have by default. A Beast who plays purely reactively, only responding once a Survivor is directly visible, tends to perform far worse than one who actively interprets these secondary information sources to predict where an unseen Survivor is likely to be, long before any direct visual contact actually occurs."
+  },
+  {
+    "id": "essay_survivor_risk_management",
+    "text": "At its core, effective Survivor play is a continuous risk-management exercise rather than a single skill like fast hacking or clever hiding. Every decision — which computer to approach next, whether to attempt a risky solo rescue, whether to keep hacking through a Skill Check while footsteps are audible nearby, or whether to break away from the group to cover more ground — carries some trade-off between progressing the team's shared objective and exposing that Survivor to potential capture. Because a single capture can easily cascade into two if a rescue attempt goes wrong, or into a full team wipe if the Beast is allowed to systematically pick off isolated Survivors one at a time, the Survivors who tend to perform best over many rounds are generally the ones who consistently make the more conservative choice in ambiguous, uncertain moments, rather than those who occasionally pull off a dramatic solo escape but expose their team to unnecessary risk far more often along the way."
+  },
+  {
+    "id": "essay_stalker_seer_counterplay",
+    "text": "From the Survivor side, playing against Stalker versus Seer calls for meaningfully different habits. Against Stalker, since the Beast's heartbeat range and visual glow are both reduced, Survivors benefit from relying more heavily on physically checking corners and doorways before committing to a route rather than trusting audio cues to provide adequate early warning, since by the time a Stalker Beast's heartbeat becomes audible, the threat is often already much closer than it would be against a Beast without that power active. Against Seer, the priority shifts toward denying line of sight as consistently as possible — favoring routes through cabinets, vents, and dense cover rather than open ground — since Seer's core value to the Beast comes specifically from bypassing the need for direct visual contact, meaning a Survivor who stays meaningfully concealed reduces much of the power's benefit regardless of how the underlying detection actually works."
+  },
+  {
+    "id": "essay_rescue_risk_calculus",
+    "text": "Deciding whether to attempt a rescue is one of the more consequential real-time judgment calls a Survivor team faces during a round. A successful rescue returns a productive teammate to active play and denies the Beast a capture, but a failed rescue attempt — one where the Beast is still nearby and catches the would-be rescuer too — effectively doubles the Beast's progress toward a full team wipe in a single exchange. Because of this asymmetric downside, experienced players generally treat \"the Beast is confirmed elsewhere\" as a near-prerequisite for attempting a rescue, rather than rushing in purely based on how much time a captured teammate has left before freezing, since a teammate who is fully frozen can no longer be saved at all, while a teammate who is captured but not yet frozen still has a chance later in the round if the timing is right."
+  },
+  {
+    "id": "essay_map_familiarity_snowball",
+    "text": "Map familiarity tends to compound in a way that mirrors the game's own map-voting dynamics: because popular maps get voted for more often, players naturally accumulate more repetitions on them, which makes those same players more likely to vote for those same familiar maps again in future lobbies, further reinforcing the gap between well-known and rarely-played maps over time. This creates a mild snowball effect where maps like Facility_0, Airport, and Shopping Center remain consistently well understood across the player base, while maps like The Library or Homestead remain comparatively under-explored simply because they're voted for less often, independent of whether their underlying layouts are actually more difficult to master than the popular alternatives once a player does invest the time to learn them."
   }
 ]

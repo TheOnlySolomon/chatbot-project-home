@@ -1,0 +1,22 @@
+[
+  {
+    "id": "game_overview",
+    "text": "Flee the Facility is a Roblox horror game where one player is the Beast and the rest are Survivors. Survivors must find keycards, unlock a hatch, and escape before the Beast catches them all."
+  },
+  {
+    "id": "role_beast",
+    "text": "The Beast is the single hunter role each round. The Beast can smash through doors and lockers to catch Survivors, and captured Survivors are strapped to a chair until rescued or the round ends."
+  },
+  {
+    "id": "role_survivor",
+    "text": "Survivors must sneak around the map searching for a hidden keycard, use it to unlock the exit hatch, and escape without being caught by the Beast."
+  },
+  {
+    "id": "map_facility",
+    "text": "The Facility is the original map in Flee the Facility. It has a maze-like layout with tight corridors, vents, and multiple locker hiding spots."
+  },
+  {
+    "id": "rescue_mechanic",
+    "text": "A captured Survivor strapped to the chair can be freed by another Survivor who reaches them before the timer runs out."
+  }
+]

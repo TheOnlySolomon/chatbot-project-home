@@ -49,16 +49,33 @@ def generate():
         return jsonify({"error": "Request body must include a 'prompt' field."}), 400
 
     user_prompt = payload["prompt"]
+    history_text = payload.get("history", "")  # prior turns, sent by the frontend
+
+    # RAG search only ever runs on the latest question, not the whole transcript,
+    # so old messages don't pollute keyword matching.
     context_chunks = search_knowledge(user_prompt)
     if context_chunks:
         context_text = "\n".join(f"- {c}" for c in context_chunks)
-        payload["prompt"] = (
+        current_turn = (
             f"Use the following facts if relevant:\n{context_text}\n\n"
             f"Question: {user_prompt}"
         )
+    else:
+        current_turn = f"Question: {user_prompt}"
+
+    full_prompt = f"{history_text}\n\n{current_turn}" if history_text else current_turn
+
+    # Build a clean payload for Ollama rather than forwarding the frontend's
+    # payload as-is, since it may carry extra fields (like "history") Ollama
+    # doesn't expect.
+    ollama_payload = {
+        "model": payload.get("model", MODEL),
+        "prompt": full_prompt,
+        "stream": payload.get("stream", False),
+    }
 
     try:
-        resp = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        resp = requests.post(OLLAMA_URL, json=ollama_payload, timeout=120)
         return jsonify(resp.json()), resp.status_code
     except requests.exceptions.ConnectionError:
         return jsonify({"error": "Ollama is not running. Start it with: ollama serve"}), 503

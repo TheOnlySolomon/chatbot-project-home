@@ -211,6 +211,11 @@
     const API = "/api/generate";
     const MODEL = "mistral:latest";
 
+    // Running conversation transcript. Only lives in memory for this page
+    // session — nothing is saved, and it resets on refresh.
+    let history = [];
+    const MAX_TURNS = 6; // keep the transcript from growing without bound
+
     function addMsg(text, type) {
       const div = document.createElement("div");
       div.className = "msg " + type;
@@ -261,10 +266,12 @@
       showThinking();
 
       try {
+        const historyText = history.join("\n\n");
+
         const res = await fetch(API, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ model: MODEL, prompt: text, stream: false })
+          body: JSON.stringify({ model: MODEL, prompt: text, history: historyText, stream: false })
         });
         const data = await res.json();
         document.getElementById("thinking")?.remove();
@@ -274,6 +281,11 @@
         } else {
           const botDiv = addMsg("", "bot");
           await typeWriter(data.response, botDiv);
+
+          // Remember this turn for future requests, capped so the transcript
+          // doesn't grow without bound and eat into the context window.
+          history.push(`User: ${text}\nAssistant: ${data.response}`);
+          if (history.length > MAX_TURNS) history.shift();
         }
       } catch (err) {
         document.getElementById("thinking")?.remove();

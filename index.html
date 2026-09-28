@@ -146,6 +146,21 @@
     .user { background: rgba(37, 99, 235, 0.2); align-self: flex-end; border-right: 3px solid var(--primary); border-bottom-right-radius: 4px; }
     .bot { background: rgba(255, 255, 255, 0.05); align-self: flex-start; border-left: 3px solid var(--accent); border-bottom-left-radius: 4px; }
 
+    /* --- Rendered Markdown inside messages --- */
+    .md { overflow-wrap: anywhere; }
+    .md.plain { white-space: pre-wrap; }
+    .md > * + * { margin-top: 0.75em; }
+    .md ul, .md ol { padding-left: 1.4em; }
+    .md li + li { margin-top: 0.25em; }
+    .md h1, .md h2, .md h3, .md h4 { font-size: 1em; color: var(--primary); }
+    .md a { color: var(--primary); }
+    .md blockquote { border-left: 2px solid var(--primary); padding-left: 10px; opacity: 0.85; }
+    .md code { background: rgba(56, 189, 248, 0.12); padding: 1px 5px; border-radius: 4px; }
+    .md pre { background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+    .md pre code { background: none; padding: 0; }
+    .md table { display: block; overflow-x: auto; border-collapse: collapse; }
+    .md th, .md td { border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 8px; }
+
     .thinking { display: flex; gap: 8px; padding: 14px; }
     .dot { width: 4px; height: 4px; background: var(--primary); border-radius: 50%; animation: pulse 1s infinite alternate; }
     @keyframes pulse { from { opacity: 0.2; } to { opacity: 1; transform: scale(1.5); } }
@@ -213,6 +228,10 @@
     </div>
   </div>
 
+  <!-- Markdown parser + HTML sanitizer (pinned versions) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
+
   <script>
     const chat = document.getElementById("chat");
     const input = document.getElementById("input");
@@ -231,8 +250,12 @@
     function addMsg(text, type) {
       const div = document.createElement("div");
       div.className = "msg " + type;
-      if (type === 'user') {
-        div.innerHTML = `<strong>[YOU]</strong><br>${text}`;
+      if (type === "user") {
+        const label = document.createElement("strong");
+        label.textContent = "[YOU]";
+        div.append(label, document.createElement("br"), document.createTextNode(text));
+      } else {
+        div.textContent = text; // plain text: safe, and makes error messages visible
       }
       chat.appendChild(div);
       chat.scrollTop = chat.scrollHeight;
@@ -250,19 +273,39 @@
       if (controller) controller.abort();
     }
 
+    // Markdown -> HTML (marked) -> cleaned HTML (DOMPurify) -> page.
+    // If the libraries failed to load, fall back to plain text.
+    function renderInto(el, text) {
+      if (window.marked && window.DOMPurify) {
+        el.classList.remove("plain");
+        el.innerHTML = DOMPurify.sanitize(marked.parse(text, { breaks: true }));
+      } else {
+        el.textContent = text;
+      }
+    }
+
     async function typeWriter(text, element, signal) {
-      element.innerHTML = `<strong>[SOLOMON]</strong><br>`;
+      element.innerHTML = `<strong>[SOLOMON]</strong><div class="md plain"></div>`;
+      const body = element.querySelector(".md");
+      const node = document.createTextNode("");
+      body.appendChild(node);
       let i = 0;
-      const speed = 15; 
+      const speed = 15;
       return new Promise((resolve) => {
+        // Render whatever has been typed so far as formatted Markdown.
+        function finish() {
+          renderInto(body, text.slice(0, i));
+          chat.scrollTop = chat.scrollHeight;
+          resolve();
+        }
         function type() {
-          if (signal.aborted) return resolve();
+          if (signal.aborted) return finish();
           if (i < text.length) {
-            element.innerHTML += text.charAt(i);
+            node.appendData(text.charAt(i));
             i++;
             chat.scrollTop = chat.scrollHeight;
             setTimeout(type, speed);
-          } else { resolve(); }
+          } else { finish(); }
         }
         type();
       });
@@ -314,7 +357,7 @@
           if (signal.aborted) {
             // Stopped mid-reply: keep what was shown, hand the question back
             // for editing, and don't save the turn to history.
-            botDiv.insertAdjacentHTML("beforeend", " <em>[STOPPED]</em>");
+            botDiv.insertAdjacentHTML("beforeend", "<div><em>[STOPPED]</em></div>");
             input.value = text;
           } else {
             // Remember this turn for future requests, capped so the transcript

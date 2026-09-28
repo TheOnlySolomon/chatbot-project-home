@@ -104,7 +104,9 @@
       flex-direction: column;
       background: var(--glass); 
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 18px;
+      overflow: hidden;
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
       z-index: 5;
     }
@@ -136,12 +138,13 @@
       max-width: 85%;
       font-size: 13px;
       line-height: 1.6;
+      border-radius: 14px;
       animation: slideIn 0.3s ease forwards;
     }
     @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
-    .user { background: rgba(37, 99, 235, 0.2); align-self: flex-end; border-right: 3px solid var(--primary); }
-    .bot { background: rgba(255, 255, 255, 0.05); align-self: flex-start; border-left: 3px solid var(--accent); }
+    .user { background: rgba(37, 99, 235, 0.2); align-self: flex-end; border-right: 3px solid var(--primary); border-bottom-right-radius: 4px; }
+    .bot { background: rgba(255, 255, 255, 0.05); align-self: flex-start; border-left: 3px solid var(--accent); border-bottom-left-radius: 4px; }
 
     .thinking { display: flex; gap: 8px; padding: 14px; }
     .dot { width: 4px; height: 4px; background: var(--primary); border-radius: 50%; animation: pulse 1s infinite alternate; }
@@ -164,6 +167,7 @@
       color: var(--primary);
       font-family: inherit;
       outline: none;
+      border-radius: 10px;
     }
 
     button {
@@ -173,9 +177,14 @@
       color: var(--primary);
       cursor: pointer;
       font-weight: bold;
+      border-radius: 10px;
       transition: all 0.3s;
     }
     button:hover { background: var(--primary); color: var(--bg-dark); box-shadow: 0 0 15px var(--primary-glow); }
+
+    #stopBtn { border-color: var(--accent); color: var(--accent); white-space: nowrap; }
+    #stopBtn:hover:not(:disabled) { background: var(--accent); color: var(--bg-dark); box-shadow: 0 0 15px rgba(244, 114, 182, 0.4); }
+    #stopBtn:disabled { opacity: 0.3; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -198,6 +207,7 @@
     <div class="header">SOLOMON_v4.0 <span>ONLINE</span></div>
     <div id="chat"></div>
     <div class="input-area">
+      <button id="stopBtn" type="button" onclick="stopGeneration()" aria-label="Stop generating" disabled>&#9632; STOP</button>
       <input id="input" placeholder=">> ENTER COMMAND..." autocomplete="off" />
       <button id="sendBtn" onclick="send()">EXECUTE</button>
     </div>
@@ -207,6 +217,7 @@
     const chat = document.getElementById("chat");
     const input = document.getElementById("input");
     const sendBtn = document.getElementById("sendBtn");
+    const stopBtn = document.getElementById("stopBtn");
 
     const API = "/api/generate";
     const MODEL = "mistral:latest";
@@ -214,6 +225,7 @@
     // Running conversation transcript. Only lives in memory for this page
     // session — nothing is saved, and it resets on refresh.
     let history = [];
+    let controller = null; // AbortController for the request currently in flight
     const MAX_TURNS = 6; // keep the transcript from growing without bound
 
     function addMsg(text, type) {
@@ -227,12 +239,24 @@
       return div;
     }
 
-    async function typeWriter(text, element) {
+    function setGenerating(on) {
+      input.disabled = on;
+      sendBtn.disabled = on;
+      stopBtn.disabled = !on;
+      if (!on) input.focus();
+    }
+
+    function stopGeneration() {
+      if (controller) controller.abort();
+    }
+
+    async function typeWriter(text, element, signal) {
       element.innerHTML = `<strong>[SOLOMON]</strong><br>`;
       let i = 0;
       const speed = 15; 
       return new Promise((resolve) => {
         function type() {
+          if (signal.aborted) return resolve();
           if (i < text.length) {
             element.innerHTML += text.charAt(i);
             i++;
@@ -262,8 +286,12 @@
       if (!text) return;
 
       addMsg(text, "user");
-      input.value = ""; input.disabled = true; sendBtn.disabled = true;
+      input.value = "";
+      setGenerating(true);
       showThinking();
+
+      controller = new AbortController();
+      const { signal } = controller;
 
       try {
         const historyText = history.join("\n\n");
@@ -271,7 +299,8 @@
         const res = await fetch(API, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ model: MODEL, prompt: text, history: historyText, stream: false })
+          body: JSON.stringify({ model: MODEL, prompt: text, history: historyText, stream: false }),
+          signal
         });
         const data = await res.json();
         document.getElementById("thinking")?.remove();
@@ -280,18 +309,31 @@
           addMsg("SYSTEM_FAILURE: " + (data.error || "Kernel Panic"), "bot error");
         } else {
           const botDiv = addMsg("", "bot");
-          await typeWriter(data.response, botDiv);
+          await typeWriter(data.response, botDiv, signal);
 
-          // Remember this turn for future requests, capped so the transcript
-          // doesn't grow without bound and eat into the context window.
-          history.push(`User: ${text}\nAssistant: ${data.response}`);
-          if (history.length > MAX_TURNS) history.shift();
+          if (signal.aborted) {
+            // Stopped mid-reply: keep what was shown, hand the question back
+            // for editing, and don't save the turn to history.
+            botDiv.insertAdjacentHTML("beforeend", " <em>[STOPPED]</em>");
+            input.value = text;
+          } else {
+            // Remember this turn for future requests, capped so the transcript
+            // doesn't grow without bound and eat into the context window.
+            history.push(`User: ${text}\nAssistant: ${data.response}`);
+            if (history.length > MAX_TURNS) history.shift();
+          }
         }
       } catch (err) {
         document.getElementById("thinking")?.remove();
-        addMsg("NETWORK_LOST: " + err.message, "bot error");
+        if (err.name === "AbortError") {
+          addMsg("", "bot").textContent = "[ GENERATION STOPPED ]";
+          input.value = text;
+        } else {
+          addMsg("NETWORK_LOST: " + err.message, "bot error");
+        }
       } finally {
-        input.disabled = false; sendBtn.disabled = false; input.focus();
+        controller = null;
+        setGenerating(false);
       }
     }
 

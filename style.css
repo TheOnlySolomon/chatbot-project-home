@@ -24,6 +24,11 @@ body {
   margin-top: 10px;
 }
 
+.msg { 
+  border-radius: 14px;
+}
+
+
 input {
   flex: 1;
   padding: 10px;

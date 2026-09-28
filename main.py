@@ -76,9 +76,19 @@ def generate():
 
     try:
         resp = requests.post(OLLAMA_URL, json=ollama_payload, timeout=120)
-        return jsonify(resp.json()), resp.status_code
     except requests.exceptions.ConnectionError:
         return jsonify({"error": "Ollama is not running. Start it with: ollama serve"}), 503
+    except requests.exceptions.Timeout:
+        # Ollama is running but didn't answer within the timeout.
+        return jsonify({"error": "Solomon took too long to respond. Try a shorter question, or try again."}), 504
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Could not reach the model ({type(e).__name__})."}), 502
+
+    try:
+        return jsonify(resp.json()), resp.status_code
+    except ValueError:
+        # Ollama replied, but not with valid JSON.
+        return jsonify({"error": "The model returned an invalid response."}), 502
 
 
 # ── Serve the chat UI ────────────────────────────────────────────────────────

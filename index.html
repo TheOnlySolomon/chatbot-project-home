@@ -345,7 +345,13 @@
           body: JSON.stringify({ model: MODEL, prompt: text, history: historyText, stream: false }),
           signal
         });
-        const data = await res.json();
+        let data;
+        try {
+          data = await res.json();
+        } catch (e) {
+          if (e.name === "AbortError") throw e; // STOP pressed while reading the reply
+          data = { error: `Server error (${res.status})` }; // reply wasn't JSON
+        }
         document.getElementById("thinking")?.remove();
 
         if (!res.ok || data.error) {
